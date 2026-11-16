@@ -14,7 +14,7 @@ Then open <http://localhost:4173>. For video export, use a modern browser that s
 
 ## Deploy
 
-The site is a static project with no build step. Import the repository in Vercel, use the repository root as the project root, and deploy the root directory. `vercel.json` contains clean-URL and security-header settings.
+The site is a static project with no build step. The Vercel project is named `editmaxai` and uses this repository's root directory. `vercel.json` contains clean-URL and security-header settings.
 
 ## Privacy
 
