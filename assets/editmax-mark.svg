@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="EditMax mark">
+  <defs>
+    <linearGradient id="editmax-gradient" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5D6AF4"/>
+      <stop offset="1" stop-color="#9A62E9"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="15" fill="url(#editmax-gradient)"/>
+  <path d="M10 34V14h4.6l9.4 10.4L33.4 14H38v20h-4.6V21.6l-9.4 10-9.4-10V34H10Z" fill="#fff"/>
+</svg>

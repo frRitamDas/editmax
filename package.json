@@ -1,7 +1,6 @@
 {
-  "name": "usecutai.com-clone",
+  "name": "editmax-frontend",
   "version": "1.0.0",
-  "scripts": {
-    "start": "npx serve ."
-  }
+  "private": true,
+  "description": "A private, browser-only video trimming frontend for EditMax."
 }
