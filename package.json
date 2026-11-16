@@ -1,7 +1,10 @@
 {
   "name": "editmax",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "start": "npx serve ."
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node --check assets/editmax-app.js && node --check landing/landing.js && node --check landing/tour.js && node --check server.mjs"
   }
 }
