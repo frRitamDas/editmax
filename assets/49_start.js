@@ -1,9 +1,9 @@
 /* The onboarding at /start (CUT-389): lp2's onboarding script from the dev site (sites/dev-site/public/lp2/start,
-   as served at cutai-dev.vercel.app/lp2/start on 2026-10-26), moved into a file. Changes for usecutai.com:
+   as served at editmax-dev.vercel.app/lp2/start on 2026-10-26), moved into a file. Changes for EditMax:
    - Its figures come from lib/content.ts through the page root's data attributes (components/landing/start-page.tsx), never typed
      here. A figure still pending there arrives empty, and the screens built on it are left out: without the editor's
-     price per video there is no money result on route A; without the minutes a video takes with CutAI, route A
-     shows the time the visitor spends editing by hand instead of the time CutAI gives back.
+     price per video there is no money result on route A; without the minutes a video takes with EditMax, route A
+     shows the time the visitor spends editing by hand instead of the time EditMax gives back.
    - The final plan picker uses a plain /checkout link for the selected plan and period. It starts with the address choice
      (/start?plan=<id>&period=<period>; Pro monthly otherwise, with an entry's mark on its copies). The homepage's
      plan cards go straight to checkout, and every other door (header, menu, hero, closing, footer, sticky bar)
@@ -14,11 +14,11 @@
      entry's own link with `from=start` (CUT-417; "Home" below).
    - The review tools (screen jumper, start over, the preview's end sheet) are left out.
    - Prices show in the visit's currency (CUT-404), from the table the page carries; see "Local prices" below.
-   It mounts once per page: a client-side visit, which no link makes today, would call window.cutaiStart.mount() again
+   It mounts once per page: a client-side visit, which no link makes today, would call window.editmaxStart.mount() again
    (components/landing/landing-mount.tsx). */
 (() => {
   "use strict";
-  if (window.cutaiStart) { window.cutaiStart.mount(); return; }
+  if (window.editmaxStart) { window.editmaxStart.mount(); return; }
 
   /* Local prices (CUT-404). A column is one currency's entry in the table the page carries (#lp-prices, worked out
      at build from lib/billing/currency.ts by lib/landing/local-prices.ts). Pro's price and "due today" arrive
@@ -26,7 +26,7 @@
      plainly at the column's frozen rate and prints in whole units: for a whole-dollar figure that is exactly
      lib/billing/currency.ts formatLocal(usd, cur, false); a figure with cents is rounded to a whole unit, as this page
      prints every quoted figure. No column, as on a USD visit: the dollars this page always printed.
-     Also on window.cutaiStart for the tests. */
+     Also on window.editmaxStart for the tests. */
   const wholes = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
   const shownIn = (column) => (usd) => Math.round(usd * column.rate); // a quoted dollar figure, as printed
   const printIn = (column) => (v) => column.pre + wholes.format(Math.round(v)) + column.post;
@@ -38,7 +38,7 @@
      (and their measuring), caption and "due today" all print through this one printer, so an /api/geo answer that
      lands while a screen is up never mixes two currencies on it; the next screen uses the new currency.
      - `money(usd)` prints a quoted dollar figure; `shown(usd)` is that figure as a number, as printed (whole units).
-     - `pro` and `price`: CutAI Pro's price as the screen states it (the column's charm price, what Stripe bills).
+     - `pro` and `price`: EditMax Pro's price as the screen states it (the column's charm price, what Stripe bills).
      - `print(v)` writes an amount already in the screen's currency, such as a saving. A saving is worked from `shown`
        and `pro`, so it adds up from the figures printed beside it.
      No column: the dollars and the math this page always had (`shown` is the dollar figure itself). */
@@ -69,9 +69,9 @@
 
   /* The numbers, from lib/content.ts (null: not confirmed yet) */
   const NUMBERS = {
-    price: figure("price"),                   // CutAI Pro, dollars a month
+    price: figure("price"),                   // EditMax Pro, dollars a month
     trialDays: figure("trialDays"),           // the free trial on every plan
-    withCutAIMin: figure("withCutaiMin"),     // minutes per video with CutAI (pending)
+    withEditMaxMin: figure("withEditMaxMin"),     // minutes per video with EditMax (pending)
     editorPerVideo: figure("editorPerVideo"), // dollars an editor charges per video (pending)
     videosPerWeek: [1, 2, 3, 4, 5, 6, 7, 14, 21, 28, 35, 42, 56, 70],  // screen 3A slider stops, left to right
     editMinutes: [5, 10, 15, 20, 30, 45, 60, 90, 120, 180, 240],       // screen 4A slider stops: minutes to edit one video by hand
@@ -88,11 +88,11 @@
        fill the whole day, and the time back shrinks in the same proportion, so no share of the day passes 100%. */
     const fit = Math.min(1, (7 * 1440) / (v * byHand));
     const byHandWeek = v * byHand * fit;
-    /* Time back never goes below zero: editing that already takes as long as CutAI does gets none. Without the
-       minutes a video takes with CutAI (pending), there is no time back to show: the time is what editing by hand takes. */
-    const hasTime = NUMBERS.withCutAIMin != null;
-    const savedWeek = hasTime ? v * Math.max(0, byHand - /** @type {number} */ (NUMBERS.withCutAIMin)) * fit : byHandWeek;
-    /* Nor does money: an editor who costs less than CutAI Pro saves nothing */
+    /* Time back never goes below zero: editing that already takes as long as EditMax does gets none. Without the
+       minutes a video takes with EditMax (pending), there is no time back to show: the time is what editing by hand takes. */
+    const hasTime = NUMBERS.withEditMaxMin != null;
+    const savedWeek = hasTime ? v * Math.max(0, byHand - /** @type {number} */ (NUMBERS.withEditMaxMin)) * fit : byHandWeek;
+    /* Nor does money: an editor who costs less than EditMax Pro saves nothing */
     const moneyMonth = NUMBERS.editorPerVideo != null ? Math.max(0, ((v * 52) / 12) * pr.shown(NUMBERS.editorPerVideo) - pr.pro) : null;
     return {
       time: periods(savedWeek),
@@ -101,7 +101,7 @@
       moneyMonth: moneyMonth,
       byHandMin: byHand,
       byHandDay: byHandWeek / 7,
-      /* The share of their life CutAI gives back: hours saved a year divided by the 8,760 hours in a year.
+      /* The share of their life EditMax gives back: hours saved a year divided by the 8,760 hours in a year.
          It is time over all the time there is, so it never passes 100%. */
       lifeShare: hasTime ? (savedWeek * 52) / 60 / 8760 : null
     };
@@ -246,7 +246,7 @@
   /* Home: the logo, and Back on the first screen. The page says where, in data-home-href on the root
      (components/landing/start-page.tsx `startHomeHref`): on an entry's copy (CUT-406), the entry's own page (CUT-417).
      Going back is not a new landing: the link carries `from=start`, and with this page before it the root layout's
-     AttrCapture keeps the visit's cutai_attr as its landing wrote it and ToltScript leaves tlt.js out, so the Back
+     AttrCapture keeps the visit's editmax_attr as its landing wrote it and ToltScript leaves tlt.js out, so the Back
      neither rewrites the visit's attribution nor counts a second Tolt click (components/analytics/start-return.ts).
      The plain page's `/` takes no marker. */
   const RETURN_MARK = "from=start";
@@ -284,11 +284,11 @@
   const pendingSignals = [];
   const tell = (type, detail = {}) => {
     const signal = { type, ...detail };
-    if (ROOT.dataset.startAnalyticsReady === "1") document.dispatchEvent(new CustomEvent("cutai-start", { detail: signal }));
+    if (ROOT.dataset.startAnalyticsReady === "1") document.dispatchEvent(new CustomEvent("editmax-start", { detail: signal }));
     else pendingSignals.push(signal);
   };
-  document.addEventListener("cutai-start-ready", () => {
-    pendingSignals.splice(0).forEach((detail) => document.dispatchEvent(new CustomEvent("cutai-start", { detail })));
+  document.addEventListener("editmax-start-ready", () => {
+    pendingSignals.splice(0).forEach((detail) => document.dispatchEvent(new CustomEvent("editmax-start", { detail })));
   });
   const PLAN_DATA = JSON.parse(document.getElementById("start-plans")?.textContent || "null");
   const initial = new URL(finalHref(), window.location.origin).searchParams;
@@ -316,14 +316,14 @@
      same choice twice (Bo, 2026-11-11: "it brings me to another pick your plan screen"). */
   const codeScreenFirst = () => {
     const p = selectedPlan();
-    return markedEntry || !(p.sheet && p.sheet[selection.period]) || /(?:^|;\s*)(?:cutai_ref|tolt_referral)=/.test(document.cookie);
+    return markedEntry || !(p.sheet && p.sheet[selection.period]) || /(?:^|;\s*)(?:editmax_ref|tolt_referral)=/.test(document.cookie);
   };
   /* Back from Stripe or the code screen with the phone's back button reloads this page when the browser kept no copy of
      it, and it opened on the first question again (Bo, 2026-11-11). Leaving from the graph or the plan step records the
      answers, the plan and that step on this page's own history entry (history state: only this entry and its reloads see
      it, no cookie or storage key; Next's router keeps it beside its own), and a page that finds them, less than three
      hours old, opens on that step with them. */
-  const RESUME_KEY = "cutaiStart", RESUME_MS = 3 * 60 * 60 * 1000, RESUME_STEPS = ["graph", "plan"];
+  const RESUME_KEY = "editmaxStart", RESUME_MS = 3 * 60 * 60 * 1000, RESUME_STEPS = ["graph", "plan"];
   const ANSWERS = { who: WHO, goal: GOALS, videos: VIDEO_STOPS, edit: EDIT_STOPS, bill: BILLS };
   const remember = (step) => {
     try {
@@ -423,15 +423,15 @@
       '<p class="sub" data-in>Based on posting ' + tie(label.charAt(0).toLowerCase() + label.slice(1)) + " and editing " + tie(stopLabel("edit", S.edit)) + ".</p>" +
       '<div class="stats">' +
         (a.timeIsBack
-          ? stat(I.clock, "You get back", a.time.month / 60, "hours", "hours a month with CutAI")
+          ? stat(I.clock, "You get back", a.time.month / 60, "hours", "hours a month with EditMax")
           : stat(I.clock, "You spend", a.time.month / 60, "hours", "hours a month editing by hand")) +
         (a.moneyMonth != null ? stat(I.piggy, "You save", a.moneyMonth, "money", "a month vs. hiring an editor", pr) : "") +
       "</div>" +
       how([
-        "Editing by hand takes about " + minWords(a.byHandMin) + " a video." + (a.timeIsBack ? " With CutAI, about " + NUMBERS.withCutAIMin + " minutes." : "")
+        "Editing by hand takes about " + minWords(a.byHandMin) + " a video." + (a.timeIsBack ? " With EditMax, about " + NUMBERS.withEditMaxMin + " minutes." : "")
       ].concat(a.moneyMonth != null ? [
         "An editor charges about " + pr.money(NUMBERS.editorPerVideo) + " a video.",
-        "CutAI Pro is " + pr.price + " a month."
+        "EditMax Pro is " + pr.price + " a month."
       ] : [])) +
       '</div><div class="foot"><button type="button" class="btn" data-act="next" data-in>See my year ' + I.arrow + "</button></div></section>";
   };
@@ -498,7 +498,7 @@
     const bill = ctx.el.querySelector('.plan-bill');
     bill.textContent = offer ? offer.note : receipt;
     // A typed or stored creator code may change these terms. The code screen quotes it before payment.
-    const codeVisit = entryQuery.has('ref') || /(?:^|;\s*)(?:cutai_ref|tolt_referral)=/.test(document.cookie);
+    const codeVisit = entryQuery.has('ref') || /(?:^|;\s*)(?:editmax_ref|tolt_referral)=/.test(document.cookie);
     bill.hidden = !offer && codeVisit;
   }
 
@@ -553,7 +553,7 @@
       paintPlan(ctx);
       tell('continue', { plan: selection.plan, period: selection.period });
       // Same key and value as markStripeTrip in lib/billing/exit-offer.ts and the tour sheet.
-      try { window.sessionStorage.setItem('cutai_to_stripe', String(Date.now())); } catch { /* storage unavailable */ }
+      try { window.sessionStorage.setItem('editmax_to_stripe', String(Date.now())); } catch { /* storage unavailable */ }
     });
     ctx.el.querySelector('.plan-code').addEventListener('click', () => tell('code', { plan: selection.plan, period: selection.period }));
     // Every way off this step (the trial button, "Have a code?", Terms, Privacy) brings the visitor back to it (`remember`).
@@ -632,11 +632,11 @@
   function chartData(metric, pr) {
     if (isB()) {
       const b = routeB(S.bill, pr);
-      /* The basis is named: CutAI Pro's price (the one /start opens checkout on by default) and a bill from the
+      /* The basis is named: EditMax Pro's price (the one /start opens checkout on by default) and a bill from the
          answer, the middle of its range (the floor of the open-ended top one). */
       const open = S.bill === NUMBERS.editorBill.length - 1;
       return { vals: b.money, div: 1, fmts: KEYS.map(() => pr.print),
-        cap: "About what you keep on CutAI Pro (" + pr.price + " a month), counting your editor at " + pr.money(NUMBERS.editorBill[S.bill]) + " a month, " + (open ? "the bottom" : "the middle") + " of the range you picked." };
+        cap: "About what you keep on EditMax Pro (" + pr.price + " a month), counting your editor at " + pr.money(NUMBERS.editorBill[S.bill]) + " a month, " + (open ? "the bottom" : "the middle") + " of the range you picked." };
     }
     const a = routeA(S.videos, S.edit, pr);
     if (metric === "money" && a.money) {
@@ -648,7 +648,7 @@
       cap: a.timeIsBack ? lifeBack(a.lifeShare) : '<p class="sub">Time you spend editing by hand.</p>'
     };
   }
-  /* Under the Time view, the share of their life CutAI gives back: a big percent beside 100 squares, one per percent */
+  /* Under the Time view, the share of their life EditMax gives back: a big percent beside 100 squares, one per percent */
   function lifeBack(f) {
     let cells = "";
     for (let k = 0; k < 100; k++) {
@@ -1096,6 +1096,6 @@
   stage.querySelectorAll("[data-start-fallback]").forEach((n) => n.remove());
   };
 
-  window.cutaiStart = { mount, moneyIn, quoteIn, printerFor };
+  window.editmaxStart = { mount, moneyIn, quoteIn, printerFor };
   mount();
 })();

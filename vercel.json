@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/refund", "destination": "/refund.html" },
+    { "source": "/welcome", "destination": "/welcome.html" },
+    { "source": "/sign-up", "destination": "/sign-in.html?mode=signup" },
+    { "source": "/forgot-password", "destination": "/sign-in.html?mode=reset" },
+    { "source": "/reset-password", "destination": "/sign-in.html?mode=reset" }
+  ]
+}

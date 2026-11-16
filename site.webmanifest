@@ -1,0 +1,17 @@
+{
+  "name": "EditMax",
+  "short_name": "EditMax",
+  "description": "AI video editing for creators",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#edf5fc",
+  "theme_color": "#edf5fc",
+  "icons": [
+    {
+      "src": "/assets/18_editmax-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
