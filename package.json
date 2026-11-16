@@ -1,6 +1,7 @@
 {
-  "name": "editmax-frontend",
+  "name": "editmax",
   "version": "1.0.0",
-  "private": true,
-  "description": "A private, browser-only video trimming frontend for EditMax."
+  "scripts": {
+    "start": "npx serve ."
+  }
 }
