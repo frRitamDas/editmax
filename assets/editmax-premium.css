@@ -21,12 +21,44 @@ html {
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  /* Restore document scrolling: the bundled start-tool stylesheet sets
+     body{height:100%;overflow:hidden} globally, which dead-locks scrolling
+     on every content page. The /start tool itself is 100dvh-based, so it is
+     unaffected by unlocking the document. */
+  height: auto;
+  min-height: 100%;
   overflow-x: clip;
+  overflow-y: visible;
 }
 
 @supports not (overflow: clip) {
   body { overflow-x: hidden; }
 }
+
+/* ---- Self-hosted fonts ----
+   All bundled @font-face rules point at ../media/*.woff2 which does not
+   exist (every page load fired ~15 font 404s and fell back to Arial). These
+   local faces + variable overrides restore the designed typography with
+   zero requests to missing files. */
+@font-face{font-family:"EM Sans";font-style:normal;font-weight:400;font-display:swap;src:url(./fonts/plus-jakarta-sans-latin-400-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Sans";font-style:normal;font-weight:500;font-display:swap;src:url(./fonts/plus-jakarta-sans-latin-500-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Sans";font-style:normal;font-weight:600;font-display:swap;src:url(./fonts/plus-jakarta-sans-latin-600-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Sans";font-style:normal;font-weight:700;font-display:swap;src:url(./fonts/plus-jakarta-sans-latin-700-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Sans";font-style:normal;font-weight:800;font-display:swap;src:url(./fonts/plus-jakarta-sans-latin-800-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Display";font-style:normal;font-weight:100;font-display:swap;src:url(./fonts/geist-latin-100-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Display";font-style:normal;font-weight:400;font-display:swap;src:url(./fonts/geist-latin-400-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Display";font-style:normal;font-weight:500;font-display:swap;src:url(./fonts/geist-latin-500-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Display";font-style:normal;font-weight:600;font-display:swap;src:url(./fonts/geist-latin-600-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Display";font-style:normal;font-weight:700;font-display:swap;src:url(./fonts/geist-latin-700-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Mono";font-style:normal;font-weight:400;font-display:swap;src:url(./fonts/geist-mono-latin-400-normal.woff2)format("woff2")}
+@font-face{font-family:"EM Mono";font-style:normal;font-weight:500;font-display:swap;src:url(./fonts/geist-mono-latin-500-normal.woff2)format("woff2")}
+.KWqLtW_variable{--font-geist:"EM Display","Geist Fallback",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.TGyh0q_variable{--font-jakarta:"EM Sans","Plus Jakarta Sans Fallback",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.SSBbPG_variable{--font-geist-mono:"EM Mono","Geist Mono Fallback",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* The /start tool is viewport-sized; let it scroll internally on short
+   screens instead of clipping unreachable content. */
+#app.app { overflow-y: auto; overscroll-behavior: contain; }
 
 /* Anchor targets clear the sticky header. */
 [id] { scroll-margin-top: var(--em-scroll-pad); }

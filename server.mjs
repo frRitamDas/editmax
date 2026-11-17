@@ -66,6 +66,14 @@ const server = http.createServer(async (request, response) => {
     });
     response.end(request.method === "HEAD" ? undefined : body);
   } catch {
+    if (!path.extname(relative) || path.extname(relative) === ".html") {
+      try {
+        const body = await readFile(path.resolve(root, "404.html"));
+        response.writeHead(404, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
+        response.end(request.method === "HEAD" ? undefined : body);
+        return;
+      } catch {}
+    }
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
     response.end("Not found");
   }
