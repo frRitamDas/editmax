@@ -215,6 +215,7 @@
   function initAutoplay() {
     const track = $(".tst-track");
     if (!track || reduced) return;
+    if (typeof track.scrollTo !== "function" || typeof track.scrollBy !== "function") return;
     let timer = 0;
     let hovering = false;
     const step = () => {
@@ -319,6 +320,34 @@
     byId.forEach((_, id) => io.observe(document.getElementById(id)));
   }
 
+  /* ---------- Hero scroll cue ---------- */
+  function initScrollCue() {
+    const hero = $(".hero-inner");
+    if (!hero || $(".em-scroll-cue")) return;
+    const cue = document.createElement("button");
+    cue.className = "em-scroll-cue";
+    cue.type = "button";
+    cue.innerHTML = '<span class="em-wheel" aria-hidden="true"></span><span>Scroll to explore</span>';
+    cue.setAttribute("aria-label", "Scroll down to explore more");
+    const cta = hero.querySelector(".hero-cta");
+    if (cta && cta.parentElement === hero) cta.after(cue);
+    else hero.appendChild(cue);
+    const section = hero.closest("section");
+    const target = document.querySelector("#how-it-works")
+      || (section && section.nextElementSibling);
+    cue.addEventListener("click", () => {
+      if (target && target.scrollIntoView) {
+        target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      } else {
+        window.scrollBy({ top: window.innerHeight * 0.8, behavior: reduced ? "auto" : "smooth" });
+      }
+    });
+    const onScroll = () =>
+      cue.classList.toggle("is-gone", (window.scrollY || 0) > 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
   /* ---------- Auto year ---------- */
   function initYear() {
     const year = String(new Date().getFullYear());
@@ -328,6 +357,7 @@
   function init() {
     initAnchors();
     initChrome();
+    initRevealFallback();
     initStagger();
     initCounters();
     initTilt();
@@ -336,6 +366,7 @@
     initMedia();
     initFaq();
     initSpy();
+    initScrollCue();
     initYear();
     document.documentElement.classList.add("em-ready");
   }
