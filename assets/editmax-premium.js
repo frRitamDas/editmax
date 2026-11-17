@@ -348,6 +348,109 @@
     onScroll();
   }
 
+  /* ---------- Announcement bar ---------- */
+  function initAnnounce() {
+    try {
+      if (window.localStorage && localStorage.getItem("editmax.ann.v1") === "x") return;
+    } catch (_) {}
+    if (document.querySelector('[data-lp="start"]')) return; // never inside the tool
+    if (document.querySelector(".kit-root")) return; // never on app/auth pages
+    if (document.querySelector(".em-announce")) return;
+    const bar = document.createElement("div");
+    bar.className = "em-announce";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Trial offer");
+    bar.innerHTML = '<span>Start your 3-day free trial — no charge until it ends.</span><a href="./start.html">Start free</a><button type="button" aria-label="Dismiss announcement">×</button>';
+    document.body.prepend(bar);
+    bar.querySelector("button").addEventListener("click", () => {
+      bar.remove();
+      try { localStorage.setItem("editmax.ann.v1", "x"); } catch (_) {}
+    });
+  }
+
+  /* ---------- Hero trust ticks ---------- */
+  function initTicks() {
+    const hero = $(".hero-inner");
+    if (!hero || $(".em-ticks")) return;
+    const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+    const ul = document.createElement("ul");
+    ul.className = "em-ticks";
+    ul.setAttribute("aria-label", "EditMax highlights");
+    ["No watermark", "4K exports", "10 videos at once"].forEach((text) => {
+      const li = document.createElement("li");
+      li.innerHTML = check + "<span></span>";
+      li.lastElementChild.textContent = text;
+      ul.appendChild(li);
+    });
+    const cue = hero.querySelector(".em-scroll-cue");
+    if (cue) cue.after(ul);
+    else {
+      const cta = hero.querySelector(".hero-cta");
+      if (cta && cta.parentElement === hero) cta.after(ul);
+      else hero.appendChild(ul);
+    }
+  }
+
+  /* ---------- Stat count-up ---------- */
+  function initStatCount() {
+    const nums = $$(".ts-num");
+    if (!nums.length) return;
+    const parse = (text) => {
+      const m = String(text).trim().match(/^([\d.,]+)(.*)$/);
+      if (!m) return null;
+      return { end: parseFloat(m[1].replace(/,/g, "")), suffix: m[2] || "",
+        decimals: (m[1].split(".")[1] || "").length };
+    };
+    const run = (el) => {
+      if (el.dataset.countDone) return;
+      el.dataset.countDone = "1";
+      const p = parse(el.textContent);
+      if (!p || !Number.isFinite(p.end)) return;
+      const fmt = (v) => v.toLocaleString("en-US", {
+        minimumFractionDigits: p.decimals, maximumFractionDigits: p.decimals }) + p.suffix;
+      if (reduced) { el.textContent = fmt(p.end); return; }
+      const dur = 1500, start = performance.now();
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / dur);
+        el.textContent = fmt(p.end * (1 - Math.pow(1 - t, 3)));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (!("IntersectionObserver" in window)) { nums.forEach(run); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    nums.forEach((n) => io.observe(n));
+  }
+
+  /* ---------- Mobile sticky CTA ---------- */
+  function initStickyCta() {
+    if (!document.querySelector(".tour")) return; // index hero only
+    if (document.querySelector(".em-sticky-cta")) return;
+    const bar = document.createElement("div");
+    bar.className = "em-sticky-cta";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Start your free trial");
+    bar.innerHTML = '<span>Ready to cut your first video?<small>Free for 3 days · No charge today</small></span><a href="./start.html">Start free</a>';
+    document.body.appendChild(bar);
+    document.documentElement.classList.add("has-sticky-cta");
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const past = (window.scrollY || 0) > window.innerHeight * 0.85;
+      const nearBottom = (window.innerHeight + (window.scrollY || 0)) > document.documentElement.scrollHeight - 140;
+      bar.classList.toggle("is-on", past && !nearBottom && window.innerWidth < 768);
+    };
+    window.addEventListener("scroll", () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+  }
+
   /* ---------- Auto year ---------- */
   function initYear() {
     const year = String(new Date().getFullYear());
@@ -367,6 +470,10 @@
     initFaq();
     initSpy();
     initScrollCue();
+    initAnnounce();
+    initTicks();
+    initStatCount();
+    initStickyCta();
     initYear();
     document.documentElement.classList.add("em-ready");
   }
