@@ -18,3 +18,17 @@ Open <http://localhost:4173>. The static development server also maps clean rout
 - These flows are not production authentication, payment processing, or support delivery. A real launch needs a trusted auth provider, server-side payment integration, and a support-message service.
 
 Vercel serves the same static frontend. `vercel.json` maps clean page URLs to the existing HTML files and supplies the added demo routes.
+
+## Premium experience layer
+
+Every page loads `assets/editmax-premium.css` + `assets/editmax-premium.js` (zero dependencies):
+
+- Smooth scrolling with sticky-header offsets, scroll progress bar, back-to-top button
+- Staggered reveal entrances, magnetic CTAs, 3D tilt cards, testimonial autoplay
+- FAQ accordion, active-section nav highlighting, reveal safety net (content can never get stuck hidden)
+- Media performance: lazy below-fold images, smart video preload, background-tab video pause
+- Full `prefers-reduced-motion` support
+
+`robots.txt` + `sitemap.xml` are served for SEO. Real `favicon.ico`, `favicon-32.png`,
+`apple-touch-icon.png`, `assets/app-icon-512.png`, and `assets/og-image.png` ship with the site —
+there are no placeholder or missing-asset references.

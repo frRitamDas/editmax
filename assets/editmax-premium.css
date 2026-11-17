@@ -1,0 +1,197 @@
+/* EditMax premium experience layer.
+   Smooth scrolling, refined motion, tactile controls and small visual upgrades.
+   This file only ADDS polish — it never removes or restructures existing design. */
+
+:root {
+  --em-ease-soft: cubic-bezier(.22, .61, .21, 1);
+  --em-ease-spring: cubic-bezier(.34, 1.35, .44, 1);
+  --em-scroll-pad: 84px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--em-scroll-pad);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  body { overflow-x: hidden; }
+}
+
+/* Anchor targets clear the sticky header. */
+[id] { scroll-margin-top: var(--em-scroll-pad); }
+
+/* ---- Selection & focus ---- */
+::selection { background: #2b98e8; color: #fff; }
+:focus-visible {
+  outline: 2px solid #2b98e8;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---- Scrollbar ---- */
+* { scrollbar-width: thin; scrollbar-color: #9cc8ec transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: linear-gradient(#7dbcec, #2b98e8); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---- Scroll progress bar ---- */
+.em-progress {
+  position: fixed; top: 0; left: 0; z-index: 10001;
+  width: 100%; height: 3px; pointer-events: none;
+  background: transparent; opacity: 0; transition: opacity .3s ease;
+}
+.em-progress.is-on { opacity: 1; }
+.em-progress > i {
+  display: block; height: 100%; width: 100%;
+  background: linear-gradient(90deg, #5dbbf6, #2b98e8 55%, #1b7fd3);
+  border-radius: 0 3px 3px 0;
+  transform-origin: 0 50%; transform: scaleX(0);
+  box-shadow: 0 1px 8px #2b98e866;
+}
+
+/* ---- Back to top ---- */
+.em-to-top {
+  position: fixed; right: 18px; bottom: 18px; z-index: 9998;
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border: 0; border-radius: 50%;
+  color: #fff; background: linear-gradient(180deg, #3aa5ef, #1b7fd3);
+  box-shadow: 0 12px 28px -8px #14609e66, inset 0 1px 1px #ffffff80;
+  cursor: pointer; opacity: 0; translate: 0 12px; pointer-events: none;
+  transition: opacity .3s var(--em-ease-soft), translate .3s var(--em-ease-soft), transform .2s ease, box-shadow .2s ease;
+}
+.em-to-top.is-on { opacity: 1; translate: 0 0; pointer-events: auto; }
+.em-to-top:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -8px #14609e77, inset 0 1px 1px #ffffff80; }
+.em-to-top:active { transform: translateY(0) scale(.96); }
+.em-to-top svg { width: 20px; height: 20px; }
+
+/* ---- Sticky header state ---- */
+header.is-scrolled, .kit-header.is-scrolled, nav.is-scrolled {
+  box-shadow: 0 10px 30px -18px #0c1b2c40;
+}
+.kit-header {
+  position: sticky; top: 0; z-index: 900;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+
+/* Active section link */
+a.is-current { color: #14609e !important; font-weight: 750; }
+
+/* ---- Premium reveals (works with the existing .reveal system) ---- */
+.reveal {
+  transition:
+    opacity .8s var(--em-ease-soft),
+    transform .8s var(--em-ease-soft),
+    filter .8s var(--em-ease-soft);
+  will-change: opacity, transform;
+}
+.reveal:not(.is-visible):not(.in) {
+  opacity: 0;
+  transform: translateY(26px);
+  filter: blur(2px);
+}
+.reveal.is-visible, .reveal.in { opacity: 1; transform: none; filter: none; }
+
+/* Stagger siblings for a cascading entrance */
+.reveal[data-stagger="1"] { transition-delay: .06s; }
+.reveal[data-stagger="2"] { transition-delay: .12s; }
+.reveal[data-stagger="3"] { transition-delay: .18s; }
+.reveal[data-stagger="4"] { transition-delay: .24s; }
+.reveal[data-stagger="5"] { transition-delay: .3s; }
+
+/* ---- Tactile buttons ---- */
+.btn-primary, .btn-dark, .hl-go, .hero .btn-primary,
+.kit-btn--primary, .hl-btn.btn {
+  transition: transform .35s var(--em-ease-spring), box-shadow .3s var(--em-ease-soft), filter .3s ease !important;
+}
+.btn-primary:hover, .btn-dark:hover, .hl-go:hover, .hero .btn-primary:hover,
+.kit-btn--primary:hover, .hl-btn.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04) saturate(1.05);
+}
+.btn-primary:active, .btn-dark:active, .hl-go:active, .hero .btn-primary:active,
+.kit-btn--primary:active, .hl-btn.btn:active { transform: translateY(0) scale(.98); }
+.kit-btn, .btn, button { -webkit-tap-highlight-color: transparent; }
+.kit-btn:disabled { cursor: wait; filter: grayscale(.2); opacity: .75; }
+
+/* Magnetic glow follows the cursor on primary CTAs */
+.em-magnetic { position: relative; }
+.em-magnetic::after {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(120px circle at var(--em-mx, 50%) var(--em-my, 50%), #ffffff38, transparent 65%);
+  opacity: 0; transition: opacity .3s ease;
+}
+.em-magnetic:hover::after { opacity: 1; }
+
+/* ---- Card lift ---- */
+.tst-card, .fx-card, .cut-card, .kit-card, .ts-item, .stat-card {
+  transition: transform .45s var(--em-ease-soft), box-shadow .45s var(--em-ease-soft);
+}
+.tst-card:hover, .fx-card:hover, .cut-card:hover, .ts-item:hover, .stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Subtle 3D tilt targets */
+[data-tilt] { transform-style: preserve-3d; will-change: transform; }
+
+/* ---- Media polish ---- */
+img { -webkit-user-drag: none; }
+img, video { max-width: 100%; }
+.hero img, .hero video { transform: translateZ(0); }
+video::-webkit-media-controls { display: none !important; }
+
+/* Testimonial track: buttery drag scroll */
+.tst-track { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.tst-track.is-dragging { scroll-behavior: auto; cursor: grabbing; user-select: none; }
+.tst-track.is-dragging * { pointer-events: none; }
+.tst-track:focus-visible { outline-offset: -3px; }
+
+/* FAQ accordion motion */
+.faq-item { overflow: clip; }
+.faq-item summary { cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item .faq-icon { transition: transform .3s var(--em-ease-soft); }
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+.faq-item .faq-a { animation: em-faq-in .35s var(--em-ease-soft); }
+@keyframes em-faq-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Nav drawer polish */
+#drawer { overscroll-behavior: contain; }
+
+/* Numbers that count up */
+[data-count] { font-variant-numeric: tabular-nums; }
+
+/* Page entrance */
+@keyframes em-page-in { from { opacity: 0; } to { opacity: 1; } }
+html.em-boot body { animation: em-page-in .5s ease both; }
+
+/* Toast above everything, premium slide */
+.em-toast {
+  left: 50%; right: auto; transform: translate(-50%, 12px);
+}
+.em-toast.is-visible { transform: translate(-50%, 0); }
+
+/* Small screens */
+@media (max-width: 640px) {
+  :root { --em-scroll-pad: 72px; }
+  .em-to-top { right: 14px; bottom: 14px; width: 42px; height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal:not(.is-visible):not(.in) { opacity: 1; transform: none; filter: none; }
+}

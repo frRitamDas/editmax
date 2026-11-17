@@ -5,6 +5,6 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "check": "node --check assets/editmax-app.js && node --check landing/landing.js && node --check landing/tour.js && node --check server.mjs"
+    "check": "node --check assets/editmax-app.js && node --check assets/editmax-premium.js && node --check landing/landing.js && node --check landing/tour.js && node --check server.mjs"
   }
 }
