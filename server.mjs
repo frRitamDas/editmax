@@ -28,7 +28,8 @@ const types = new Map([
   [".json", "application/json; charset=utf-8"], [".webmanifest", "application/manifest+json; charset=utf-8"],
   [".svg", "image/svg+xml"], [".png", "image/png"], [".jpg", "image/jpeg"],
   [".jpeg", "image/jpeg"], [".webp", "image/webp"], [".avif", "image/avif"],
-  [".mp4", "video/mp4"], [".woff2", "font/woff2"], [".ico", "image/x-icon"]
+  [".mp4", "video/mp4"], [".woff2", "font/woff2"], [".ico", "image/x-icon"],
+  [".txt", "text/plain; charset=utf-8"], [".xml", "application/xml; charset=utf-8"]
 ]);
 
 const server = http.createServer(async (request, response) => {
