@@ -8,5 +8,25 @@
     { "source": "/sign-up", "destination": "/sign-in.html?mode=signup" },
     { "source": "/forgot-password", "destination": "/sign-in.html?mode=reset" },
     { "source": "/reset-password", "destination": "/sign-in.html?mode=reset" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/landing/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
   ]
 }
