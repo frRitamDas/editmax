@@ -13,4 +13,7 @@
   <url><loc>https://editmaxai.vercel.app/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://editmaxai.vercel.app/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://editmaxai.vercel.app/cookies</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://editmaxai.vercel.app/studio</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://editmaxai.vercel.app/assistant</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://editmaxai.vercel.app/dashboard</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

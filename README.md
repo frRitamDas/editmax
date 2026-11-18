@@ -32,3 +32,16 @@ Every page loads `assets/editmax-premium.css` + `assets/editmax-premium.js` (zer
 `robots.txt` + `sitemap.xml` are served for SEO. Real `favicon.ico`, `favicon-32.png`,
 `apple-touch-icon.png`, `assets/app-icon-512.png`, and `assets/og-image.png` ship with the site —
 there are no placeholder or missing-asset references.
+
+## Experience pages
+
+Three self-contained, single-file experience pages (inline CSS + vanilla JS, no framework):
+
+| File | Route | Design |
+|---|---|---|
+| `studio.html` | `/studio` | Single-viewport black landing — looping hero film, liquid-metal nav pills, masked headline, three-stat footer, full entrance choreography, mobile drawer |
+| `assistant.html` | `/assistant` | Two full-viewport sections — hero with glowing composer + masked headline reveal, then gradient "live reasoning" panel with a real conversation |
+| `dashboard.html` | `/dashboard` | One-screen AI studio — icon rail, glass top bar, CSS glass orb, composer, quick-action cards, conversation history |
+
+Shared self-hosted fonts: `inter.woff2`, `instrument-serif-italic.woff2` (root) and `assets/fonts/inter-tight-latin-wght.woff2`.
+All three honour `prefers-reduced-motion` and degrade to fully visible static layouts if the Web Animations API is unavailable.
