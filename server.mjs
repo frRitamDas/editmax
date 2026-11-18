@@ -21,6 +21,7 @@ const routes = new Map([
   ["/checkout", "checkout.html"],
   ["/refund", "refund.html"],
   ["/welcome", "welcome.html"],
+  ["/home", "home.html"],
   ["/studio", "studio.html"],
   ["/assistant", "assistant.html"],
   ["/dashboard", "dashboard.html"]

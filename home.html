@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EditMax — one brief, ten ads</title>
+<meta name="description" content="EditMax turns one product brief into ten scroll-stopping TikTok Shop ads. AI cuts, hooks and captions in about 90 seconds.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="EditMax — one brief, ten ads">
+<meta property="og:description" content="One product brief becomes ten TikTok Shop ads. AI cuts, hooks and captions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://editmaxai.vercel.app/home">
+<meta property="og:image" content="https://editmaxai.vercel.app/assets/og-image.png">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/em26.css?v=1">
+<style>
+/* ============ immersive home ============ */
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  padding-top: clamp(18px, 3vw, 34px);
+}
+.home-hero .ambient { opacity: 0.9; }
+.home-hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+}
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 60px);
+  min-height: calc(100dvh - var(--nav-h) - 96px);
+  padding-block: clamp(26px, 4.4vw, 64px);
+}
+.hero-copy { max-width: 40rem; }
+.hero-copy .display { max-width: 15ch; }
+.hero-copy .display em { color: #cfcfe0; }
+.rot-word { display: inline-block; min-width: 4.4ch; text-align: left; }
+.rot-word.is-swapping { opacity: 0; transform: translateY(-6px); }
+.rot-word { transition: opacity .22s ease, transform .22s ease; }
+
+.social-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(24px, 3vw, 34px);
+  flex-wrap: wrap;
+}
+.avatars { display: flex; }
+.avatars img {
+  width: 30px; height: 30px; border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #050506;
+  margin-left: -9px;
+  filter: saturate(.95);
+}
+.avatars img:first-child { margin-left: 0; }
+.social-row p { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.social-row p b { color: #fff; font-weight: 500; }
+
+/* visual */
+.hero-visual { position: relative; display: grid; place-items: center; min-height: 380px; }
+.orb-stage { position: relative; width: clamp(230px, 30vw, 330px); aspect-ratio: 1; display: grid; place-items: center; }
+.orb-stage .orb { width: 100%; height: 100%; margin: 0; }
+.orb-halo {
+  position: absolute; inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(47,107,255,.30), rgba(90,76,245,.16) 46%, transparent 70%);
+  filter: blur(26px);
+  animation: halo 9s ease-in-out infinite;
+}
+@keyframes halo { 0%,100% { opacity: .7; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.05); } }
+
+.float-card {
+  position: absolute;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 13px;
+  border-radius: 13px;
+  background: rgba(14,14,18,.78);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: 0 24px 60px -28px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.07);
+  font-size: 12px;
+  color: #d9d9e4;
+  white-space: nowrap;
+  animation: floaty 7s ease-in-out infinite;
+}
+.float-card b { color: #fff; font-family: var(--ui-tight); font-weight: 600; }
+.float-card .dot-live { width: 7px; height: 7px; border-radius: 50%; background: #23d92c; box-shadow: 0 0 7px rgba(35,217,44,.8); flex: none; }
+.float-card .pill-tag {
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  color: #b9c8ff; background: rgba(47,107,255,.16);
+  box-shadow: inset 0 0 0 1px rgba(120,150,255,.28);
+  padding: 2px 6px; border-radius: 5px;
+}
+.fc-1 { top: 6%; left: -2%; }
+.fc-2 { bottom: 12%; right: -2%; animation-delay: 1.4s; }
+.fc-3 { top: 44%; right: -6%; animation-delay: .7s; }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.scroll-cue {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  padding-bottom: 18px;
+  font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: #6d6d78;
+}
+.scroll-cue svg { width: 14px; height: 14px; animation: cue 2.2s ease-in-out infinite; }
+@keyframes cue { 0%,100% { transform: translateY(-2px); opacity: .55; } 50% { transform: translateY(3px); opacity: 1; } }
+
+/* stat bar pinned under hero */
+.hero-stats { position: relative; z-index: 1; background: rgba(255,255,255,.015); }
+
+/* marquee */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(20px, 3vw, 34px);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: slide 46s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.variant {
+  position: relative;
+  width: clamp(150px, 17vw, 208px);
+  aspect-ratio: 9 / 14;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #0b0b0e;
+  flex: none;
+}
+.variant img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); transition: filter .5s ease, transform .6s var(--ease); }
+.variant:hover img { filter: saturate(1.05); transform: scale(1.04); }
+.variant-top {
+  position: absolute; top: 9px; left: 9px; right: 9px;
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+}
+.variant-tag {
+  font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+  color: #e6ecff; background: rgba(10,12,24,.66);
+  box-shadow: inset 0 0 0 1px rgba(140,165,255,.28);
+  padding: 3px 7px; border-radius: 5px;
+  backdrop-filter: blur(8px);
+}
+.variant-len { font-size: 10px; color: #d5d5de; background: rgba(10,10,14,.6); padding: 3px 6px; border-radius: 5px; }
+.variant-bottom {
+  position: absolute; left: 9px; right: 9px; bottom: 9px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; font-size: 11px; color: #d8dae4;
+}
+.variant-bottom b { font-family: var(--ui-tight); color: #fff; font-size: 12px; }
+
+/* actions / feature cards row */
+.acts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.act {
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(47,107,255,.13), transparent 58%),
+    linear-gradient(165deg, #121216, #0a0a0c);
+  transition: transform .26s var(--ease), border-color .26s ease, box-shadow .26s ease;
+  overflow: hidden;
+}
+.act:nth-child(2) { background: radial-gradient(120% 120% at 0% 0%, rgba(90,76,245,.15), transparent 58%), linear-gradient(165deg,#121218,#0a0a0c); }
+.act:nth-child(3) { background: radial-gradient(120% 120% at 0% 0%, rgba(120,208,205,.12), transparent 58%), linear-gradient(165deg,#101417,#0a0a0c); }
+.act:hover { transform: translateY(-3px); border-color: rgba(140,165,255,.3); box-shadow: 0 24px 54px -30px rgba(50,80,220,.9); }
+.act-head { display: flex; align-items: center; gap: 10px; }
+.act-ico { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); color: #dfe6ff; }
+.act-ico svg { width: 16px; height: 16px; }
+.act h3 { font-size: 15px; font-weight: 500; letter-spacing: -.02em; }
+.act p { color: var(--muted); font-size: 13px; line-height: 1.55; }
+.act .link-arrow { margin-top: auto; font-size: 12.5px; }
+
+/* pricing compact */
+.mini-plans { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.mini-plan {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  background: linear-gradient(170deg, #111114, #0a0a0c);
+  display: flex; flex-direction: column; gap: 4px;
+  transition: border-color .26s ease, transform .26s ease;
+}
+.mini-plan:hover { border-color: rgba(140,165,255,.3); transform: translateY(-2px); }
+.mini-plan.is-pro { border-color: rgba(120,150,255,.42); background: linear-gradient(170deg,#15172a,#0b0b12); box-shadow: 0 0 30px -14px rgba(90,120,255,.5); }
+.mini-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mini-name { font-size: 13px; color: #e7e7ee; }
+.mini-flag { font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: #cfd9ff; background: rgba(90,120,255,.18); padding: 2px 7px; border-radius: 5px; }
+.mini-price { font-family: var(--ui-tight); font-size: 27px; font-weight: 600; letter-spacing: -.035em; margin-top: 8px; }
+.mini-price small { font-family: var(--ui); font-size: 12px; font-weight: 400; color: var(--dim); letter-spacing: 0; }
+.mini-note { font-size: 11.5px; color: var(--dim); margin-bottom: 12px; }
+.mini-plan .btn { margin-top: auto; }
+
+/* closing band */
+.closer { position: relative; overflow: hidden; border-radius: 22px; border: 1px solid var(--line); padding: clamp(28px,5vw,54px); text-align: center; background: radial-gradient(70% 120% at 50% 0%, rgba(47,107,255,.26), transparent 66%), radial-gradient(50% 90% at 80% 10%, rgba(124,72,240,.2), transparent 72%), linear-gradient(180deg,#0f0f15,#07070a); }
+
+@media (max-width: 1023px) {
+  .hero-grid { grid-template-columns: 1fr; min-height: 0; gap: 30px; text-align: center; }
+  .hero-copy { max-width: 100%; margin-inline: auto; }
+  .hero-copy .display { max-width: 100%; }
+  .hero-actions { justify-content: center; }
+  .social-row { justify-content: center; }
+  .hero-visual { min-height: 300px; order: -1; }
+  .text-col { text-align: center; }
+  .rot-word { text-align: center; }
+}
+@media (max-width: 860px) {
+  .acts { grid-template-columns: 1fr; }
+  .mini-plans { grid-template-columns: 1fr; }
+  .fc-1 { left: 0; top: 0; }
+  .fc-2 { right: 0; bottom: 4%; }
+  .fc-3 { display: none; }
+}
+@media (max-width: 560px) {
+  .float-card { font-size: 11px; padding: 8px 10px; }
+  .hero-visual { min-height: 260px; }
+  .orb-stage { width: 210px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .orb-halo, .float-card, .scroll-cue svg { animation: none !important; }
+  .marquee { overflow-x: auto; }
+}
+</style>
+</head>
+<body data-page="home2" style="background:#000;color:#fff">
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="./home.html" aria-label="EditMax home">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <g transform="rotate(-30 12 12)">
+          <circle cx="7.3" cy="3.2" r="1.45"/><rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/>
+          <rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/><circle cx="16.7" cy="20.8" r="1.45"/>
+        </g>
+      </svg>
+      <span>EditMax<span class="suffix">.ai</span></span>
+    </a>
+
+    <nav class="nav-pills" aria-label="Primary">
+      <a class="nav-pill" href="#product">Product</a>
+      <a class="nav-pill" href="#showcase">Showcase</a>
+      <a class="nav-pill" href="#pricing">Pricing</a>
+      <a class="nav-pill" href="./index.html#faq">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--ghost btn--sm" href="./sign-in.html">Sign in</a>
+      <a class="btn btn--solid btn--sm" href="./start.html" data-session-cta>Start free</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-backdrop" aria-hidden="true"></div>
+
+<!-- ============ hero ============ -->
+<section class="home-hero">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy text-col">
+      <p class="badge">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
+        <span>One brief · ten ads</span>
+      </p>
+
+      <h1 class="display">
+        <span class="line-mask"><span class="line-inner">Your product, cut into</span></span>
+        <span class="line-mask"><span class="line-inner">ten scroll-stopping <em class="rot-word" data-rot>ads.</em></span></span>
+      </h1>
+
+      <p class="lede">Describe the product once. EditMax finds the money shot, writes five hooks, burns captions and renders a full batch in about ninety seconds — no timeline, no editor invoice.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn--solid btn--lg" href="./start.html" data-session-cta>Start free for 3 days</a>
+        <a class="btn btn--ghost btn--lg" href="./dashboard.html">See the studio</a>
+      </div>
+
+      <div class="social-row">
+        <div class="avatars" aria-hidden="true">
+          <img src="./assets/25_james-white.webp" alt="" width="30" height="30" loading="lazy">
+          <img src="./assets/24_colin-reich.webp" alt="" width="30" height="30" loading="lazy">
+          <img src="./assets/22_after-poster.webp" alt="" width="30" height="30" loading="lazy">
+        </div>
+        <p><b>180+ creator teams</b> ship with EditMax · 4.9 average rating</p>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="orb-halo" aria-hidden="true"></div>
+      <div class="orb-stage">
+        <div class="orb" aria-hidden="true">
+          <span class="orb-plate"></span><span class="orb-core"></span><span class="orb-swirl"></span><span class="orb-glass"></span>
+        </div>
+      </div>
+
+      <div class="float-card fc-1">
+        <span class="dot-live" aria-hidden="true"></span>
+        <span>Rendering <b>5 variants</b></span>
+        <span class="pill-tag">live</span>
+      </div>
+      <div class="float-card fc-2">
+        <span>Variant 03 · CTR</span>
+        <b>4.8%</b>
+        <span class="pill-tag">+38%</span>
+      </div>
+      <div class="float-card fc-3">
+        <span>Hook A/B winner</span>
+        <b>0:14</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="scroll-cue" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v14M6.5 13.5 12 19l5.5-5.5"/></svg>
+      <span>Scroll to see how</span>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="wrap">
+      <div class="stats" style="border:0;background:transparent">
+        <span class="stat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="#8a8a95"/><rect x="13.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="#5b5b66"/><rect x="9.2" y="10.9" width="5.6" height="2.2" rx="1.1" fill="#4a4a52"/></svg>
+          <span><b><span data-count="4.2" data-suffix="M+">4.2M+</span></b> videos automated</span>
+        </span>
+        <span class="stat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="2.4" width="19.2" height="19.2" rx="6.2" fill="#fff"/><g stroke="#111" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 7.1v7.4"/><path d="M8.15 12.35 12 16.2l3.85-3.85"/></g></svg>
+          <span><b><span data-count="92" data-suffix="%">92%</span></b> less manual editing</span>
+        </span>
+        <span class="stat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.6" fill="#8a8a95"/><circle cx="16.6" cy="10.4" r="2.8" fill="#5d5d67"/><path d="M2.6 19.4c.7-3.4 3.3-5.4 6.4-5.4s5.7 2 6.4 5.4" fill="#6f6f7a"/></svg>
+          <span><b><span data-count="180" data-suffix="+">180+</span></b> creator teams</span>
+        </span>
+        <span class="stat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.5 6.2 20.6l1.1-6.5L2.6 9.5l6.5-.9L12 2.7z" fill="#e8e8ef"/></svg>
+          <span><b>90s</b> average batch render</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ marquee ============ -->
+<section class="section section--tight" style="padding-block:clamp(28px,4vw,52px) 0" aria-label="Recent renders">
+  <div class="wrap">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <div>
+        <p class="eyebrow">Fresh off the queue</p>
+        <h2 class="h2 mt-1" style="font-size:clamp(1.4rem,2.4vw,2rem)">Ten variants, <em>one brief</em></h2>
+      </div>
+      <a class="link-arrow" href="./studio.html">Open Studio →</a>
+    </div>
+  </div>
+
+  <div class="marquee mt-3" aria-label="Example renders">
+    <div class="marquee-track">
+      <!-- set A -->
+      <div class="variant"><img src="./assets/22_after-poster.webp" alt="Serum before and after ad" loading="lazy"><div class="variant-top"><span class="variant-tag">Serum</span><span class="variant-len">0:14</span></div><div class="variant-bottom"><span>Hook · oxidised</span><b>4.8%</b></div></div>
+      <div class="variant"><img src="./assets/32_hand-real.webp" alt="Hand holding product, unboxing angle" loading="lazy"><div class="variant-top"><span class="variant-tag">Skincare</span><span class="variant-len">0:15</span></div><div class="variant-bottom"><span>Hook · texture</span><b>4.1%</b></div></div>
+      <div class="variant"><img src="./assets/24_colin-reich.webp" alt="Founder story frame" loading="lazy"><div class="variant-top"><span class="variant-tag">Founder</span><span class="variant-len">0:22</span></div><div class="variant-bottom"><span>Hook · origin</span><b>3.6%</b></div></div>
+      <div class="variant"><img src="./assets/31_screen-cutting.webp" alt="Edit timeline showing scene detection" loading="lazy"><div class="variant-top"><span class="variant-tag">Batch</span><span class="variant-len">88s</span></div><div class="variant-bottom"><span>10 renders</span><b>Auto</b></div></div>
+      <div class="variant"><img src="./assets/22_after-poster.webp" alt="Serum ad variant two" loading="lazy"><div class="variant-top"><span class="variant-tag">Serum</span><span class="variant-len">0:12</span></div><div class="variant-bottom"><span>Hook · price</span><b>3.9%</b></div></div>
+      <div class="variant"><img src="./assets/32_hand-real.webp" alt="Unboxing variant two" loading="lazy"><div class="variant-top"><span class="variant-tag">Skincare</span><span class="variant-len">0:09</span></div><div class="variant-bottom"><span>Hook · 3 drops</span><b>4.4%</b></div></div>
+      <!-- set B (duplicate for seamless loop) -->
+      <div class="variant" aria-hidden="true"><img src="./assets/22_after-poster.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Serum</span><span class="variant-len">0:14</span></div><div class="variant-bottom"><span>Hook · oxidised</span><b>4.8%</b></div></div>
+      <div class="variant" aria-hidden="true"><img src="./assets/32_hand-real.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Skincare</span><span class="variant-len">0:15</span></div><div class="variant-bottom"><span>Hook · texture</span><b>4.1%</b></div></div>
+      <div class="variant" aria-hidden="true"><img src="./assets/24_colin-reich.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Founder</span><span class="variant-len">0:22</span></div><div class="variant-bottom"><span>Hook · origin</span><b>3.6%</b></div></div>
+      <div class="variant" aria-hidden="true"><img src="./assets/31_screen-cutting.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Batch</span><span class="variant-len">88s</span></div><div class="variant-bottom"><span>10 renders</span><b>Auto</b></div></div>
+      <div class="variant" aria-hidden="true"><img src="./assets/22_after-poster.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Serum</span><span class="variant-len">0:12</span></div><div class="variant-bottom"><span>Hook · price</span><b>3.9%</b></div></div>
+      <div class="variant" aria-hidden="true"><img src="./assets/32_hand-real.webp" alt="" loading="lazy"><div class="variant-top"><span class="variant-tag">Skincare</span><span class="variant-len">0:09</span></div><div class="variant-bottom"><span>Hook · 3 drops</span><b>4.4%</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ product ============ -->
+<section class="section" id="product">
+  <div class="wrap">
+    <div class="grid grid-2" style="align-items:center;gap:clamp(24px,4vw,56px)">
+      <div>
+        <p class="eyebrow will-reveal">Why it lands</p>
+        <h2 class="h2 mt-2 will-reveal">Built for the first <em>1.5 seconds</em></h2>
+        <p class="lede mt-2 will-reveal">Everything in EditMax exists to protect the opening. Scene detection skips the dead air, hooks are ranked by how fast they land, and captions are placed where TikTok's UI never covers them.</p>
+
+        <div class="grid mt-3" style="gap:10px">
+          <div class="will-reveal" style="display:flex;gap:11px;font-size:13.5px;color:#c6c6d2;line-height:1.5"><span style="color:#8fa6ff">→</span><span><b style="color:#fff;font-weight:500">Hook scoring</b> — five rewrites per clip, ranked against your own completion data.</span></div>
+          <div class="will-reveal" style="display:flex;gap:11px;font-size:13.5px;color:#c6c6d2;line-height:1.5"><span style="color:#8fa6ff">→</span><span><b style="color:#fff;font-weight:500">Scene-aware trims</b> — the boring 40 minutes of scrubbing, gone.</span></div>
+          <div class="will-reveal" style="display:flex;gap:11px;font-size:13.5px;color:#c6c6d2;line-height:1.5"><span style="color:#8fa6ff">→</span><span><b style="color:#fff;font-weight:500">Safe-area captions</b> — legible under the TikTok Shop overlay, every time.</span></div>
+        </div>
+
+        <div class="hero-actions" style="justify-content:flex-start">
+          <a class="btn btn--solid" href="./start.html">Cut my first batch</a>
+          <a class="btn btn--ghost" href="./assistant.html">See reasoning</a>
+        </div>
+      </div>
+
+      <div class="panel-energy will-reveal" style="padding:clamp(14px,1.8vw,22px)">
+        <div class="live-row"><span class="dot" aria-hidden="true"></span><span>Live reasoning</span></div>
+        <div class="chat-card" style="margin-top:12px">
+          <div class="msg msg--user">
+            <span class="msg-avatar msg-avatar--user" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M4.6 20c.8-3.6 3.8-5.6 7.4-5.6s6.6 2 7.4 5.6"/></svg></span>
+            <div class="bubble">15s ad for the serum. Stop the scroll in the first second.</div>
+          </div>
+          <div class="msg">
+            <span class="msg-avatar msg-avatar--ai" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0c07" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 13.9 9l5.6 1.9-5.6 1.9L12 18.4l-1.9-5.6L4.5 10.9 10.1 9 12 3.4Z"/></svg></span>
+            <div class="bubble">Cutting three hooks. I dropped the talking-head intro — it delays the first visual by 2.4s, which costs about 31% of viewers on your account.<span class="gap"></span>Want the calmer variant instead?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ three ways in ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="mx-auto center" style="max-width:54ch">
+      <p class="eyebrow will-reveal">Three ways in</p>
+      <h2 class="h2 mt-2 will-reveal">Pick the surface that <em>fits your day</em></h2>
+    </div>
+
+    <div class="acts mt-4">
+      <a class="act will-reveal" href="./studio.html">
+        <div class="act-head">
+          <span class="act-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="M10 9.4v5.2l4.4-2.6L10 9.4Z"/></svg></span>
+          <h3>Studio</h3>
+        </div>
+        <p>The front door. One brief in, a folder of vertical variants out — batch queue included.</p>
+        <span class="link-arrow">Open Studio →</span>
+      </a>
+
+      <a class="act will-reveal" href="./assistant.html">
+        <div class="act-head">
+          <span class="act-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.4 8.4 0 0 1-12.2 7.5L4 21l1.5-4.6A8.4 8.4 0 1 1 21 12Z"/></svg></span>
+          <h3>Assistant</h3>
+        </div>
+        <p>Ask why a cut works, then rewrite the hook, pacing or caption in plain English.</p>
+        <span class="link-arrow">Open Assistant →</span>
+      </a>
+
+      <a class="act will-reveal" href="./dashboard.html">
+        <div class="act-head">
+          <span class="act-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.6v4.8l3.4 2"/></svg></span>
+          <h3>AI Studio</h3>
+        </div>
+        <p>Your week, planned. Hooks, products and posting slots in one calm dashboard.</p>
+        <span class="link-arrow">Open dashboard →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ showcase ============ -->
+<section class="section section--tight" id="showcase">
+  <div class="wrap">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:22px;flex-wrap:wrap">
+      <div style="max-width:48ch">
+        <p class="eyebrow will-reveal">Showcase</p>
+        <h2 class="h2 mt-2 will-reveal">Cuts from <em>real stores</em></h2>
+      </div>
+      <a class="link-arrow will-reveal" href="./index.html#showcase">More work →</a>
+    </div>
+
+    <div class="grid grid-4 mt-4" style="gap:12px">
+      <figure class="shot will-reveal" style="margin:0">
+        <img src="./assets/22_after-poster.webp" alt="Serum before and after ad" loading="lazy" width="540" height="960">
+        <figcaption class="shot-meta"><span>Serum · after/before</span><b>+38% CTR</b></figcaption>
+      </figure>
+      <figure class="shot will-reveal" style="margin:0">
+        <img src="./assets/24_colin-reich.webp" alt="Founder story frame" loading="lazy" width="540" height="960">
+        <figcaption class="shot-meta"><span>Founder story</span><b>2.1M views</b></figcaption>
+      </figure>
+      <figure class="shot will-reveal" style="margin:0">
+        <img src="./assets/32_hand-real.webp" alt="Unboxing footage" loading="lazy" width="768" height="1360">
+        <figcaption class="shot-meta"><span>Unboxing · 9:16</span><b>0:14</b></figcaption>
+      </figure>
+      <figure class="shot will-reveal" style="margin:0">
+        <img src="./assets/31_screen-cutting.webp" alt="Scene detection timeline" loading="lazy" width="720" height="1566">
+        <figcaption class="shot-meta"><span>Batch of 10</span><b>88s</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ pricing ============ -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div style="max-width:46ch">
+      <p class="eyebrow will-reveal">Pricing</p>
+      <h2 class="h2 mt-2 will-reveal">Three days free, <em>then you decide</em></h2>
+      <p class="lede mt-2 will-reveal">Cancel in two clicks from your account. No charge today, ever, on a trial.</p>
+    </div>
+
+    <div class="mini-plans mt-4">
+      <div class="mini-plan will-reveal">
+        <div class="mini-top"><span class="mini-name">Starter</span></div>
+        <div class="mini-price">$19.99 <small>/mo</small></div>
+        <p class="mini-note">100 edits · 30 videos</p>
+        <a class="btn btn--ghost btn--block btn--sm" href="./checkout.html?plan=starter&amp;period=monthly">Start free trial</a>
+      </div>
+      <div class="mini-plan is-pro will-reveal">
+        <div class="mini-top"><span class="mini-name">Pro</span><span class="mini-flag">Popular</span></div>
+        <div class="mini-price">$49.99 <small>/mo</small></div>
+        <p class="mini-note">300 edits · 150 videos · batch of 10</p>
+        <a class="btn btn--solid btn--block btn--sm" href="./checkout.html?plan=pro&amp;period=monthly">Start free trial</a>
+      </div>
+      <div class="mini-plan will-reveal">
+        <div class="mini-top"><span class="mini-name">Ultimate</span></div>
+        <div class="mini-price">$89.99 <small>/mo</small></div>
+        <p class="mini-note">Unlimited edits · 4K · team seats</p>
+        <a class="btn btn--ghost btn--block btn--sm" href="./checkout.html?plan=ultimate&amp;period=monthly">Start free trial</a>
+      </div>
+    </div>
+    <p class="small mt-2">Yearly billing saves up to 36%. <a class="link-arrow" href="./index.html#pricing" style="font-size:12.5px">Compare plans →</a></p>
+  </div>
+</section>
+
+<!-- ============ closer ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="closer will-reveal">
+      <div class="orb mx-auto" aria-hidden="true" style="margin-bottom:16px;width:74px;height:74px;min-width:74px">
+        <span class="orb-plate"></span><span class="orb-core"></span><span class="orb-swirl"></span><span class="orb-glass"></span>
+      </div>
+      <h2 class="h2">Your camera roll is <em>already enough</em></h2>
+      <p class="lede mx-auto mt-2" style="max-width:48ch">Drop one clip, get ten ads. Three days free — the only thing you spend is the trial.</p>
+      <div class="hero-actions">
+        <a class="btn btn--solid btn--lg" href="./start.html" data-session-cta>Start free for 3 days</a>
+        <a class="btn btn--ghost btn--lg" href="./index.html">Full product tour</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="./home.html">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-30 12 12)"><circle cx="7.3" cy="3.2" r="1.45"/><rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/><rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/><circle cx="16.7" cy="20.8" r="1.45"/></g></svg>
+          <span>EditMax<span class="suffix">.ai</span></span>
+        </a>
+        <p>AI video editing for TikTok Shop creators. Cut, caption and ship ads without a timeline.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./start.html">Start editing</a></li>
+          <li><a href="./studio.html">Studio</a></li>
+          <li><a href="./assistant.html">Assistant</a></li>
+          <li><a href="./dashboard.html">AI Studio</a></li>
+          <li><a href="./index.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="./support.html">Support</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="./account.html">Your account</a></li>
+          <li><a href="./refund.html">Refunds</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="./privacy.html">Privacy</a></li>
+          <li><a href="./terms.html">Terms</a></li>
+          <li><a href="./cookies.html">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> EditMax. All rights reserved.</span>
+      <span>Made for people who ship.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/em26.js?v=1"></script>
+<script src="./assets/em26-app.js?v=1"></script>
+<script>
+(function () {
+  "use strict";
+  var el = document.querySelector("[data-rot]");
+  if (!el) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var words = ["ads.", "hooks.", "cuts.", "reels."];
+  var i = 0;
+  setInterval(function () {
+    el.classList.add("is-swapping");
+    setTimeout(function () {
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      el.classList.remove("is-swapping");
+    }, 220);
+  }, 2600);
+})();
+</script>
+</body>
+</html>
