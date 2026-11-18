@@ -1,47 +1,44 @@
-# EditMax frontend
+# EditMax
 
-The original EditMax website is kept as a static, frontend-only site. Its original page design and bundled assets are served directly; a small client-side layer fills in the previously missing account and checkout flows.
+AI video editing for TikTok Shop creators. Static site — plain HTML, CSS and vanilla JS, no build step.
 
-## Run locally
+Live: https://editmaxai.vercel.app
 
-```sh
-npm start
+## Structure
+
+| File | Route | Purpose |
+|---|---|---|
+| `index.html` | `/` | Marketing home — hero, composer, how it works, features, live reasoning, showcase, pricing, FAQ |
+| `start.html` | `/start` | 5-step onboarding quiz → recommends a plan → checkout |
+| `checkout.html` | `/checkout` | Demo checkout, writes a 3-day trial subscription |
+| `welcome.html` | `/welcome` | Post-checkout confirmation |
+| `sign-in.html` | `/sign-in`, `/sign-up`, `/forgot-password` | Sign in / sign up / reset (mode via query) |
+| `account.html` | `/account` | Plan, usage, answers, cancel, sign out |
+| `studio.html` | `/studio` | Single-viewport black experience page with a looping hero film |
+| `assistant.html` | `/assistant` | Two-section hero + gradient "live reasoning" panel |
+| `dashboard.html` | `/dashboard` | One-screen AI studio with the glass orb |
+| `support.html` / `contact.html` | `/support`, `/contact` | Contact forms |
+| `refund.html` | `/refund` | Refund policy + request form |
+| `privacy.html` / `terms.html` / `cookies.html` | legal | Policy pages |
+| `404.html` | any miss | Branded not-found page |
+
+## Design system
+
+`assets/em26.css` — tokens, liquid-metal nav pills, buttons, glass orb, gradient panel, pricing, FAQ, forms, toasts, doc layout.
+`assets/em26.js` — header state, drawer, masked headline reveals, scroll reveals, pricing toggle, counters, hero composer handoff.
+`assets/em26-app.js` — demo data layer (users, session, subscriptions, quiz, contact, refunds) and per-page controllers.
+
+Fonts are self-hosted: `assets/fonts/inter-var.woff2`, `assets/fonts/inter-tight-latin-wght.woff2`, `instrument-serif-italic.woff2`.
+
+## Demo persistence
+
+All flow state lives in `localStorage` under `editmax.demo.*` keys. No network calls, no real payments — checkout accepts any 15+ digit card number to walk the flow.
+
+## Local dev
+
+```bash
+npm start   # http://localhost:4173
+npm run check
 ```
 
-Open <http://localhost:4173>. The static development server also maps clean routes such as `/sign-in`, `/account`, `/checkout`, `/refund`, and `/welcome` to the corresponding HTML pages.
-
-## Frontend demo behavior
-
-- Sign-up, sign-in, password reset, and account settings use browser `localStorage` for this-device demo accounts.
-- The checkout validates demo card input in the browser and stores a demo trial locally. It never sends or stores card details and does not charge money.
-- Contact and refund forms save a local demo copy only; they do not send email or reach a support inbox.
-- These flows are not production authentication, payment processing, or support delivery. A real launch needs a trusted auth provider, server-side payment integration, and a support-message service.
-
-Vercel serves the same static frontend. `vercel.json` maps clean page URLs to the existing HTML files and supplies the added demo routes.
-
-## Premium experience layer
-
-Every page loads `assets/editmax-premium.css` + `assets/editmax-premium.js` (zero dependencies):
-
-- Smooth scrolling with sticky-header offsets, scroll progress bar, back-to-top button
-- Staggered reveal entrances, magnetic CTAs, 3D tilt cards, testimonial autoplay
-- FAQ accordion, active-section nav highlighting, reveal safety net (content can never get stuck hidden)
-- Media performance: lazy below-fold images, smart video preload, background-tab video pause
-- Full `prefers-reduced-motion` support
-
-`robots.txt` + `sitemap.xml` are served for SEO. Real `favicon.ico`, `favicon-32.png`,
-`apple-touch-icon.png`, `assets/app-icon-512.png`, and `assets/og-image.png` ship with the site —
-there are no placeholder or missing-asset references.
-
-## Experience pages
-
-Three self-contained, single-file experience pages (inline CSS + vanilla JS, no framework):
-
-| File | Route | Design |
-|---|---|---|
-| `studio.html` | `/studio` | Single-viewport black landing — looping hero film, liquid-metal nav pills, masked headline, three-stat footer, full entrance choreography, mobile drawer |
-| `assistant.html` | `/assistant` | Two full-viewport sections — hero with glowing composer + masked headline reveal, then gradient "live reasoning" panel with a real conversation |
-| `dashboard.html` | `/dashboard` | One-screen AI studio — icon rail, glass top bar, CSS glass orb, composer, quick-action cards, conversation history |
-
-Shared self-hosted fonts: `inter.woff2`, `instrument-serif-italic.woff2` (root) and `assets/fonts/inter-tight-latin-wght.woff2`.
-All three honour `prefers-reduced-motion` and degrade to fully visible static layouts if the Web Animations API is unavailable.
+Regenerate the secondary pages after editing the shell: `python3 tools/build_pages.py`.

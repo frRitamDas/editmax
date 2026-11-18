@@ -1,49 +1,67 @@
-<!doctype html>
-<html lang="en" data-theme="light" class="KWqLtW_variable SSBbPG_variable h-full antialiased">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#EDF5FC">
-  <meta name="application-name" content="EditMax">
-  <title>Welcome · EditMax</title>
-  <meta name="description" content="Your EditMax frontend demo is ready.">
-  <meta property="og:title" content="Welcome · EditMax">
-  <meta property="og:description" content="Your EditMax frontend demo is ready.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Welcome · EditMax">
-  <meta name="twitter:description" content="Your EditMax frontend demo is ready.">
-  <meta name="twitter:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-<link rel="icon" href="./assets/18_editmax-app-icon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-400-normal.woff2" as="font" crossorigin type="font/woff2">
-<link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" crossorigin type="font/woff2">
-  <link rel="stylesheet" href="./assets/0_19gc5kaqme8yz.css">
-  <link rel="stylesheet" href="./assets/1_1nn23zycaiupy.css">
-  <link rel="stylesheet" href="./assets/43_3b_loe66urxwq.css">
-  <link rel="stylesheet" href="./assets/3_3-yysbew8fjbx.css">
-  <link rel="stylesheet" href="./assets/editmax-app.css?v=1">
-<link rel="stylesheet" href="./assets/editmax-premium.css?v=3">
-  <style>:root:has([data-brand="soft-glass"][data-shell]){--font-geist:'EM Sans','Plus Jakarta Sans Fallback',-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
-  <script src="./assets/editmax-app.js?v=1" defer></script>
-<script src="./assets/editmax-premium.js?v=3" defer></script>
-<noscript><style>.reveal{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome to EditMax</title>
+<meta name="description" content="Your EditMax trial is live.">
+<meta name="theme-color" content="#050506">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/em26.css?v=1">
+<style>
+.page-head { padding-block: clamp(30px, 4.4vw, 54px) clamp(20px, 2.6vw, 30px); }
+.page-head h1 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 500; letter-spacing: -.038em; line-height: 1.08; }
+.page-head h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: #b9b9c4; }
+.page-head p { color: var(--muted); margin-top: 10px; max-width: 60ch; font-size: 14.5px; line-height: 1.6; }
+
+.welcome-wrap { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 32px var(--pad); position: relative; }
+.welcome-card { position: relative; z-index: 1; width: min(560px, 100%); text-align: center; padding: clamp(26px, 3.4vw, 40px); border-radius: var(--r-xl);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) #0a0a0c;
+  border: 1px solid var(--line); box-shadow: 0 50px 100px -50px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.05); }
+.tick { width: 54px; height: 54px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(135deg, rgba(47,107,255,.9), rgba(90,76,245,.65));
+  box-shadow: 0 0 0 1px rgba(160,180,255,.4), 0 16px 40px -16px rgba(70,100,255,.9); }
+.welcome-card h1 { font-size: clamp(1.7rem, 3vw, 2.15rem); font-weight: 500; letter-spacing: -.035em; }
+.welcome-card h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: #b9b9c4; }
+.welcome-steps { text-align: left; margin-top: 24px; display: grid; gap: 10px; }
+.welcome-steps div { display: flex; gap: 11px; font-size: 13.5px; color: #c9c9d4; line-height: 1.5; }
+.welcome-steps b { flex: none; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; background: rgba(47,107,255,.16); box-shadow: inset 0 0 0 1px rgba(120,150,255,.3); color: #cfd9ff; }
+</style>
 </head>
-<body class="min-h-full flex flex-col bg-page text-fg-1">
-  <div data-brand="soft-glass" data-shell class="kit-root TGyh0q_variable">
-    <div aria-hidden="true" class="kit-sky"></div>
-    <header class="kit-header">
-      <a href="./index.html" class="kit-logo" aria-label="EditMax home"><img src="./assets/18_editmax-app-icon.svg" alt="" width="28" height="28"><span class="kit-logo-word" aria-hidden="true">Edit<span>Max</span></span></a>
-      <a href="./account.html" class="kit-link">Your account</a>
-    </header>
-    <main id="main" class="em-app-main em-app-main--narrow" data-app-page="welcome">
-      <div data-welcome-root><p class="kit-text">Loading your confirmation…</p></div>
-    </main>
-    <footer class="kit-footer"><nav aria-label="Help and legal"><ul><li><a href="./privacy.html">Privacy</a></li><li><a href="./cookies.html">Cookies</a></li><li><a href="./terms.html">Terms</a></li><li><a href="./support.html">Support</a></li><li><a href="./contact.html">Contact</a></li></ul></nav></footer>
+<body data-page="welcome" style="background:#050506;color:#fff">
+<div class="grain" aria-hidden="true"></div>
+
+<div class="welcome-wrap">
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="welcome-card">
+    <div class="tick" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h1>You're in, <em data-w-name>creator</em></h1>
+    <p class="lede mt-2">Your free trial is live. Nothing is charged until <b style="color:#fff" data-w-date>—</b>.</p>
+
+    <div class="plan mt-3" style="text-align:left">
+      <div class="kv"><dt>Plan</dt><dd data-w-plan>Pro · Monthly</dd></div>
+      <div class="kv"><dt>Due today</dt><dd>$0.00</dd></div>
+      <div class="kv"><dt>Then</dt><dd data-w-amount>$49.99</dd></div>
+    </div>
+
+    <div class="welcome-steps">
+      <div><b>1</b><span>Drop a product link or your raw footage.</span></div>
+      <div><b>2</b><span>EditMax cuts ten 9:16 variants with different hooks.</span></div>
+      <div><b>3</b><span>Export the winners straight to TikTok Shop.</span></div>
+    </div>
+
+    <div class="hero-actions" style="margin-top:24px">
+      <a class="btn btn--solid btn--lg" href="./start.html">Cut my first video</a>
+      <a class="btn btn--ghost btn--lg" href="./account.html">Go to account</a>
+    </div>
+    <p class="form-note">Receipt and plan details are in your account. Demo build — no payment was processed.</p>
   </div>
+</div>
+<script src="./assets/em26.js?v=1"></script>
+<script src="./assets/em26-app.js?v=1"></script>
 </body>
 </html>

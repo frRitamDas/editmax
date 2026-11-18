@@ -1,47 +1,165 @@
-<!doctype html>
-<html lang="en" data-theme="light" class="KWqLtW_variable SSBbPG_variable h-full antialiased">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#EDF5FC">
-  <meta name="application-name" content="EditMax">
-  <title>Your account · EditMax</title>
-  <meta name="description" content="Manage your EditMax demo account and plan.">
-  <meta property="og:title" content="Your account · EditMax">
-  <meta property="og:description" content="Manage your EditMax demo account and plan.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Your account · EditMax">
-  <meta name="twitter:description" content="Manage your EditMax demo account and plan.">
-  <meta name="twitter:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-<link rel="icon" href="./assets/18_editmax-app-icon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-400-normal.woff2" as="font" crossorigin type="font/woff2">
-<link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" crossorigin type="font/woff2">
-  <link rel="stylesheet" href="./assets/0_19gc5kaqme8yz.css">
-  <link rel="stylesheet" href="./assets/1_1nn23zycaiupy.css">
-  <link rel="stylesheet" href="./assets/43_3b_loe66urxwq.css">
-  <link rel="stylesheet" href="./assets/3_3-yysbew8fjbx.css">
-  <link rel="stylesheet" href="./assets/editmax-app.css?v=1">
-<link rel="stylesheet" href="./assets/editmax-premium.css?v=3">
-  <style>:root:has([data-brand="soft-glass"][data-shell]){--font-geist:'EM Sans','Plus Jakarta Sans Fallback',-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
-  <script src="./assets/editmax-app.js?v=1" defer></script>
-<script src="./assets/editmax-premium.js?v=3" defer></script>
-<noscript><style>.reveal{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your account — EditMax</title>
+<meta name="description" content="Manage your EditMax plan, usage and settings.">
+<meta name="theme-color" content="#050506">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/em26.css?v=1">
+<style>
+.page-head { padding-block: clamp(30px, 4.4vw, 54px) clamp(20px, 2.6vw, 30px); }
+.page-head h1 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 500; letter-spacing: -.038em; line-height: 1.08; }
+.page-head h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: #b9b9c4; }
+.page-head p { color: var(--muted); margin-top: 10px; max-width: 60ch; font-size: 14.5px; line-height: 1.6; }
+
+.acc-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 16px; align-items: start; }
+.acc-head { display: flex; align-items: center; gap: 14px; }
+.acc-avatar { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 17px; background: linear-gradient(135deg,#4a72ff,#7b5cf0); box-shadow: 0 0 0 2px rgba(255,255,255,.1); }
+.acc-name { font-size: 16px; font-weight: 500; letter-spacing: -.02em; }
+.acc-mail { font-size: 12.5px; color: var(--dim); }
+.usage { margin-top: 14px; }
+.usage .bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,.07); overflow: hidden; margin-top: 8px; }
+.usage .bar span { display: block; height: 100%; border-radius: 3px; background: var(--grad); transition: width .6s var(--ease); }
+.acc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.quick-links { display: grid; gap: 8px; margin-top: 12px; }
+.quick-links a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 13px; border-radius: 11px; background: rgba(255,255,255,.025); border: 1px solid var(--line-soft); font-size: 13.5px; color: #dcdce6; transition: border-color .2s ease, background .2s ease; }
+.quick-links a:hover { border-color: rgba(140,165,255,.3); background: rgba(255,255,255,.05); }
+.quick-links span { color: var(--dim); font-size: 12px; }
+@media (max-width: 880px) { .acc-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
-<body class="min-h-full flex flex-col bg-page text-fg-1">
-  <a href="#main" class="sr-only rounded-full bg-accent font-sans text-sm font-semibold text-accent-ink focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[100] focus-visible:inline-flex focus-visible:h-11 focus-visible:items-center focus-visible:px-5">Skip to content</a>
-  <div data-brand="soft-glass" data-shell class="kit-root TGyh0q_variable">
-    <div aria-hidden="true" class="kit-sky"></div>
-    <header class="kit-header">
-      <a href="./index.html" class="kit-logo" aria-label="EditMax home"><img src="./assets/18_editmax-app-icon.svg" alt="" width="28" height="28"><span class="kit-logo-word" aria-hidden="true">Edit<span>Max</span></span></a>
-    </header>
-    <main id="main" class="flex-1 px-4 pb-12 pt-6 sm:px-6 md:pt-10" aria-live="polite"></main>
-    <footer class="kit-footer"><nav aria-label="Help and legal"><ul><li><a href="./privacy.html">Privacy</a></li><li><a href="/privacy#your-privacy-choices">Your Privacy Choices</a></li><li><a href="./cookies.html">Cookies</a></li><li><a href="./terms.html">Terms</a></li><li><a href="./support.html">Support</a></li><li><a href="./contact.html">Contact</a></li></ul></nav></footer>
+<body data-page="account" style="background:#050506;color:#fff">
+<div class="grain" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="./index.html" aria-label="EditMax home">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-30 12 12)"><circle cx="7.3" cy="3.2" r="1.45"/><rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/><rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/><circle cx="16.7" cy="20.8" r="1.45"/></g></svg>
+      <span>EditMax<span class="suffix">.ai</span></span>
+    </a>
+    <nav class="nav-pills" aria-label="Primary">
+      <a class="nav-pill" href="./index.html#product">Product</a>
+      <a class="nav-pill" href="./index.html#showcase">Showcase</a>
+      <a class="nav-pill" href="./index.html#pricing">Pricing</a>
+      <a class="nav-pill" href="./index.html#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn--ghost btn--sm" href="./sign-in.html">Sign in</a>
+      <a class="btn btn--solid btn--sm" href="./start.html" data-session-cta>Start free</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+</header>
+<div class="menu-backdrop" aria-hidden="true"></div>
+
+<main class="app-main">
+  <div class="wrap">
+    <div class="page-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
+        <div class="acc-head">
+          <span class="acc-avatar" data-acc-initial>A</span>
+          <div>
+            <div class="acc-name" data-acc-name>Your account</div>
+            <div class="acc-mail" data-acc-email>—</div>
+          </div>
+        </div>
+        <div class="acc-actions" style="margin-top:0">
+          <a class="btn btn--solid btn--sm" href="./start.html">New edit</a>
+          <a class="btn btn--ghost btn--sm" href="./index.html#pricing">Change plan</a>
+          <a class="btn btn--ghost btn--sm" href="#" data-signout>Sign out</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-grid">
+      <section class="panel">
+        <p class="eyebrow">Subscription</p>
+        <h2 class="h2 mt-2" style="font-size:22px" data-acc-plan>No active plan</h2>
+
+        <div class="usage">
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim)">
+            <span>Monthly usage</span><span data-acc-status>Free</span>
+          </div>
+          <div class="bar"><span data-acc-bar style="width:0%"></span></div>
+          <p class="small mt-2" data-acc-usage>Start a trial to unlock edits</p>
+        </div>
+
+        <div class="mt-3">
+          <div class="kv"><dt>Renews / access ends</dt><dd data-acc-renewal>—</dd></div>
+          <div class="kv"><dt>Your main goal</dt><dd data-acc-goal>Not set yet</dd></div>
+          <div class="kv"><dt>Account type</dt><dd data-acc-role>Not set yet</dd></div>
+        </div>
+
+        <div class="acc-actions">
+          <a class="btn btn--solid btn--sm" href="./start.html">Start a new batch</a>
+          <button class="btn btn--ghost btn--sm" type="button" data-acc-cancel>Cancel plan</button>
+        </div>
+        <p class="form-note">Cancel keeps your access until the end of the current period. No emails, no retention calls.</p>
+      </section>
+
+      <aside class="panel">
+        <p class="eyebrow">Jump back in</p>
+        <div class="quick-links">
+          <a href="./dashboard.html"><span style="color:#dcdce6">AI Studio dashboard</span><span>Orb assistant →</span></a>
+          <a href="./studio.html"><span style="color:#dcdce6">Studio landing</span><span>Hero film →</span></a>
+          <a href="./assistant.html"><span style="color:#dcdce6">Assistant workspace</span><span>Chat →</span></a>
+          <a href="./support.html"><span style="color:#dcdce6">Support</span><span>Human reply →</span></a>
+          <a href="./refund.html"><span style="color:#dcdce6">Request a refund</span><span>2 business days →</span></a>
+        </div>
+        <p class="form-note">Demo build: your plan, usage and answers live in this browser only.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="./index.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-30 12 12)"><circle cx="7.3" cy="3.2" r="1.45"/><rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/><rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/><circle cx="16.7" cy="20.8" r="1.45"/></g></svg><span>EditMax<span class="suffix">.ai</span></span></a>
+        <p>AI video editing for TikTok Shop creators. Cut, caption and ship ads without a timeline.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="./start.html">Start editing</a></li>
+          <li><a href="./studio.html">Studio</a></li>
+          <li><a href="./assistant.html">Assistant</a></li>
+          <li><a href="./dashboard.html">AI Studio</a></li>
+          <li><a href="./index.html#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="./support.html">Support</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="./account.html">Your account</a></li>
+          <li><a href="./refund.html">Refunds</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="./privacy.html">Privacy</a></li>
+          <li><a href="./terms.html">Terms</a></li>
+          <li><a href="./cookies.html">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> EditMax. All rights reserved.</span>
+      <span>Made for people who ship.</span>
+    </div>
+  </div>
+</footer>
+<script src="./assets/em26.js?v=1"></script>
+<script src="./assets/em26-app.js?v=1"></script>
 </body>
 </html>

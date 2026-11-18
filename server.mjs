@@ -20,7 +20,10 @@ const routes = new Map([
   ["/start", "start.html"],
   ["/checkout", "checkout.html"],
   ["/refund", "refund.html"],
-  ["/welcome", "welcome.html"]
+  ["/welcome", "welcome.html"],
+  ["/studio", "studio.html"],
+  ["/assistant", "assistant.html"],
+  ["/dashboard", "dashboard.html"]
 ]);
 const types = new Map([
   [".html", "text/html; charset=utf-8"], [".css", "text/css; charset=utf-8"],

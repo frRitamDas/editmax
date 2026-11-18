@@ -1,47 +1,70 @@
-<!doctype html>
-<html lang="en" data-theme="light" class="KWqLtW_variable SSBbPG_variable h-full antialiased">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#EDF5FC">
-  <meta name="application-name" content="EditMax">
-  <title>Sign in · EditMax</title>
-  <meta name="description" content="Sign in or create an EditMax demo account.">
-  <meta property="og:title" content="Sign in · EditMax">
-  <meta property="og:description" content="Sign in or create an EditMax demo account.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sign in · EditMax">
-  <meta name="twitter:description" content="Sign in or create an EditMax demo account.">
-  <meta name="twitter:image" content="https://editmaxai.vercel.app/assets/og-image.png">
-<link rel="icon" href="./assets/18_editmax-app-icon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-400-normal.woff2" as="font" crossorigin type="font/woff2">
-<link rel="preload" href="./assets/fonts/plus-jakarta-sans-latin-700-normal.woff2" as="font" crossorigin type="font/woff2">
-  <link rel="stylesheet" href="./assets/0_19gc5kaqme8yz.css">
-  <link rel="stylesheet" href="./assets/1_1nn23zycaiupy.css">
-  <link rel="stylesheet" href="./assets/43_3b_loe66urxwq.css">
-  <link rel="stylesheet" href="./assets/3_3-yysbew8fjbx.css">
-  <link rel="stylesheet" href="./assets/editmax-app.css?v=1">
-<link rel="stylesheet" href="./assets/editmax-premium.css?v=3">
-  <style>:root:has([data-brand="soft-glass"][data-shell]){--font-geist:'EM Sans','Plus Jakarta Sans Fallback',-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}</style>
-  <script src="./assets/editmax-app.js?v=1" defer></script>
-<script src="./assets/editmax-premium.js?v=3" defer></script>
-<noscript><style>.reveal{opacity:1!important;transform:none!important;filter:none!important}</style></noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in — EditMax</title>
+<meta name="description" content="Sign in to your EditMax account, or create one free.">
+<meta name="theme-color" content="#050506">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/em26.css?v=1">
+<style>
+.page-head { padding-block: clamp(30px, 4.4vw, 54px) clamp(20px, 2.6vw, 30px); }
+.page-head h1 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 500; letter-spacing: -.038em; line-height: 1.08; }
+.page-head h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: #b9b9c4; }
+.page-head p { color: var(--muted); margin-top: 10px; max-width: 60ch; font-size: 14.5px; line-height: 1.6; }
+
+.auth-brand { display: inline-flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; letter-spacing: -.03em; }
+.auth-brand svg { width: 22px; height: 22px; }
+.auth-alt { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; font-size: 12.5px; }
+.auth-alt a { color: #b9c6e6; }
+.auth-alt a:hover { color: #fff; }
+</style>
 </head>
-<body class="min-h-full flex flex-col bg-page text-fg-1">
-  <a href="#main" class="sr-only rounded-full bg-accent font-sans text-sm font-semibold text-accent-ink focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[100] focus-visible:inline-flex focus-visible:h-11 focus-visible:items-center focus-visible:px-5">Skip to content</a>
-  <div data-brand="soft-glass" data-shell class="kit-root TGyh0q_variable">
-    <div aria-hidden="true" class="kit-sky"></div>
-    <header class="kit-header">
-      <a href="./index.html" class="kit-logo" aria-label="EditMax home"><img src="./assets/18_editmax-app-icon.svg" alt="" width="28" height="28"><span class="kit-logo-word" aria-hidden="true">Edit<span>Max</span></span></a>
-    </header>
-    <main id="main" class="flex-1 px-4 pb-12 pt-6 sm:px-6 md:pt-10" aria-live="polite"></main>
-    <footer class="kit-footer"><nav aria-label="Help and legal"><ul><li><a href="./privacy.html">Privacy</a></li><li><a href="/privacy#your-privacy-choices">Your Privacy Choices</a></li><li><a href="./cookies.html">Cookies</a></li><li><a href="./terms.html">Terms</a></li><li><a href="./support.html">Support</a></li><li><a href="./contact.html">Contact</a></li></ul></nav></footer>
+<body data-page="signin" style="background:#050506;color:#fff">
+<div class="grain" aria-hidden="true"></div>
+
+<div class="auth-wrap">
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="auth-card">
+    <a class="auth-brand" href="./index.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-30 12 12)"><circle cx="7.3" cy="3.2" r="1.45"/><rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/><rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/><circle cx="16.7" cy="20.8" r="1.45"/></g></svg><span>EditMax<span class="suffix" style="font-weight:400;color:#cfcfd6">.ai</span></span></a>
+    <h1 data-auth-title>Welcome back</h1>
+    <p class="sub" data-auth-sub>Sign in to pick up where your last cut left off.</p>
+
+    <form data-auth-form novalidate>
+      <div class="field" data-field-name hidden>
+        <label for="au-name">Your name</label>
+        <input class="input" id="au-name" name="name" type="text" autocomplete="name" placeholder="Alex Morgan">
+      </div>
+      <div class="field">
+        <label for="au-email">Email</label>
+        <input class="input" id="au-email" name="email" type="email" autocomplete="email" placeholder="you@store.com" required>
+      </div>
+      <div class="field">
+        <label for="au-pass">Password</label>
+        <input class="input" id="au-pass" name="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" required>
+      </div>
+      <div class="field" data-field-confirm hidden>
+        <label for="au-confirm">Confirm password</label>
+        <input class="input" id="au-confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Repeat your password">
+      </div>
+
+      <p class="form-error" role="alert"></p>
+
+      <button class="btn btn--solid btn--lg btn--block mt-3" data-auth-submit type="submit">Sign in</button>
+
+      <div class="auth-alt">
+        <a href="./sign-in.html?mode=reset" data-auth-alt>Forgot password?</a>
+        <span data-auth-switch style="color:var(--dim)">New here? <a class="link-arrow" href="./sign-in.html?mode=signup">Create an account</a></span>
+      </div>
+    </form>
+
+    <p class="form-note">Demo build — accounts are stored in this browser only. Nothing is sent to a server.</p>
   </div>
+</div>
+<script src="./assets/em26.js?v=1"></script>
+<script src="./assets/em26-app.js?v=1"></script>
 </body>
 </html>
