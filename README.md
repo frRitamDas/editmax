@@ -8,7 +8,9 @@ Live: https://editmaxai.vercel.app
 
 | File | Route | Purpose |
 |---|---|---|
-| `index.html` | `/` | Marketing home — hero, composer, how it works, features, live reasoning, showcase, pricing, FAQ |
+| `index.html` | `/` | Flagship home — editorial hero with product mock, metric band, workflow, tabbed capabilities, reasoning, proof, pricing, FAQ |
+| `home.html` | `/home` | Cinematic home — asymmetric hero, floating live cards, rotating word, variant marquee |
+| `tour.html` | `/tour` | Long-form product tour — hero composer, feature grid, full reasoning panel, showcase |
 | `start.html` | `/start` | 5-step onboarding quiz → recommends a plan → checkout |
 | `checkout.html` | `/checkout` | Demo checkout, writes a 3-day trial subscription |
 | `welcome.html` | `/welcome` | Post-checkout confirmation |
@@ -42,3 +44,5 @@ npm run check
 ```
 
 Regenerate the secondary pages after editing the shell: `python3 tools/build_pages.py`.
+
+Three front pages are intentionally different: `/` is the professional flagship, `/home` is the cinematic variant, `/tour` is the long-form walkthrough.

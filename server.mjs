@@ -22,6 +22,7 @@ const routes = new Map([
   ["/refund", "refund.html"],
   ["/welcome", "welcome.html"],
   ["/home", "home.html"],
+  ["/tour", "tour.html"],
   ["/studio", "studio.html"],
   ["/assistant", "assistant.html"],
   ["/dashboard", "dashboard.html"]

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>EditMax — AI video editing for TikTok Shop creators</title>
-<meta name="description" content="EditMax learns your product, your hooks and your pacing, then cuts captions and exports TikTok Shop videos that sell. Start free for 3 days.">
+<title>EditMax — the editing layer behind every TikTok Shop ad</title>
+<meta name="description" content="EditMax turns one product brief into a batch of scroll-stopping TikTok Shop ads — cuts, hooks, captions and 9:16 exports in about 90 seconds.">
 <meta name="theme-color" content="#050506">
-<meta property="og:title" content="EditMax — AI video editing for TikTok Shop creators">
-<meta property="og:description" content="Turn raw footage into scroll-stopping ads. AI cuts, hooks and captions built for TikTok Shop.">
+<meta property="og:title" content="EditMax — the editing layer behind every TikTok Shop ad">
+<meta property="og:description" content="One brief in, a batch of vertical ads out. Cuts, hooks and captions handled.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://editmaxai.vercel.app/">
 <meta property="og:image" content="https://editmaxai.vercel.app/assets/og-image.png">
@@ -15,9 +15,280 @@
 <link rel="preload" href="./inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./assets/em26.css?v=1">
-</head>
-<body data-page="home">
+<style>
+/* =====================================================================
+   Flagship homepage — editorial layout, product-first
+   ===================================================================== */
 
+.skip {
+  position: absolute; left: 12px; top: -60px; z-index: 200;
+  background: #fff; color: #0b0b0e; padding: 10px 16px; border-radius: 8px;
+  font-size: 13px; transition: top .2s ease;
+}
+.skip:focus { top: 12px; }
+
+/* ---------- hero ---------- */
+.f-hero { position: relative; overflow: hidden; padding-block: clamp(40px, 6vw, 88px) clamp(34px, 4vw, 56px); }
+.f-hero .ambient::before { top: -46vh; opacity: .85; }
+.f-hero-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  gap: clamp(28px, 4.2vw, 64px);
+  align-items: center;
+}
+.f-kicker {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12px; letter-spacing: .11em; text-transform: uppercase;
+  color: #98a1b8; font-weight: 600;
+}
+.f-kicker .dotlive {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #2f6bff; box-shadow: 0 0 0 3px rgba(47,107,255,.16), 0 0 10px rgba(47,107,255,.9);
+}
+.f-title {
+  margin-top: 18px;
+  font-size: clamp(2.5rem, 4.9vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  font-weight: 500;
+  max-width: 15ch;
+}
+.f-title em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.03em; color: #c9c9d8; }
+.f-lede { margin-top: 20px; max-width: 46ch; color: #a2a2ac; font-size: clamp(1rem, 1.12vw, 1.08rem); line-height: 1.6; letter-spacing: -.012em; }
+.f-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.f-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; font-size: 12.5px; color: #70707a; }
+.f-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.f-meta svg { width: 13px; height: 13px; color: #7d8aa8; }
+
+.f-trust { margin-top: clamp(30px, 3.4vw, 42px); }
+.f-trust p { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: #5f6068; }
+.f-logos { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 30px); margin-top: 12px; flex-wrap: wrap; }
+.f-logos span { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: #8b8b96; letter-spacing: -.01em; }
+.f-logos svg { width: 17px; height: 17px; }
+
+/* ---------- editor mock ---------- */
+.mock-wrap { position: relative; }
+.mock-wrap::before {
+  content: ""; position: absolute; inset: -12% -8%;
+  background: radial-gradient(50% 50% at 50% 40%, rgba(47,107,255,.30), transparent 70%),
+              radial-gradient(40% 44% at 78% 66%, rgba(90,76,245,.24), transparent 72%);
+  filter: blur(30px);
+  z-index: 0;
+}
+.mock {
+  position: relative; z-index: 1;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.11);
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012)) #0b0b0e;
+  box-shadow: 0 50px 90px -50px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.07);
+  overflow: hidden;
+}
+.mock-bar {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.02);
+}
+.mock-dots { display: flex; gap: 4px; }
+.mock-dots i { width: 6px; height: 6px; border-radius: 50%; background: #2c2c34; display: block; }
+.mock-title { font-size: 11.5px; color: #b9b9c4; letter-spacing: -.005em; }
+.mock-dots + .mock-title { margin-left: 2px; }
+.mock-state {
+  margin-left: auto; font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
+  color: #cfd9ff; background: rgba(47,107,255,.16);
+  box-shadow: inset 0 0 0 1px rgba(120,150,255,.28);
+  padding: 3px 7px; border-radius: 5px;
+}
+.mock-body { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: 12px; padding: 12px; }
+.mock-stage {
+  position: relative; border-radius: 11px; overflow: hidden;
+  aspect-ratio: 9 / 13;
+  border: 1px solid rgba(255,255,255,.07);
+  background: #08080a;
+}
+.mock-stage img { width: 100%; height: 100%; object-fit: cover; opacity: .82; }
+.mock-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  gap: 7px; padding: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,.14) 0%, rgba(0,0,0,.05) 42%, rgba(0,0,0,.72) 100%);
+}
+.mock-hook { font-size: 13.5px; font-weight: 600; line-height: 1.25; letter-spacing: -.02em; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.7); }
+.mock-cap { align-self: flex-start; font-size: 10.5px; color: #0b0b0e; background: #fff; padding: 3px 7px; border-radius: 4px; font-weight: 600; }
+.mock-ratio { position: absolute; top: 10px; left: 10px; font-size: 10px; color: #dcdce4; background: rgba(8,8,10,.62); padding: 3px 6px; border-radius: 4px; }
+.mock-safe {
+  position: absolute; left: 8px; right: 8px; bottom: 34%; height: 0;
+  border-top: 1px dashed rgba(255,255,255,.16);
+}
+.mock-side { display: flex; flex-direction: column; gap: 8px; }
+.mock-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 10px; border-radius: 9px;
+  background: rgba(255,255,255,.03);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.055);
+  font-size: 11px; color: #9d9da8;
+}
+.mock-row b { font-family: var(--ui-tight); font-size: 13px; font-weight: 600; color: #fff; letter-spacing: -.02em; }
+.mock-row b.up { color: #8fe0c8; }
+.mock-note {
+  margin-top: auto; font-size: 10.5px; line-height: 1.45; color: #767680;
+  padding: 9px 10px; border-radius: 9px;
+  background: linear-gradient(135deg, rgba(47,107,255,.12), rgba(90,76,245,.08));
+  box-shadow: inset 0 0 0 1px rgba(120,150,255,.16);
+}
+.mock-timeline {
+  position: relative; display: flex; gap: 3px;
+  padding: 0 12px 12px;
+}
+.tl-clip {
+  height: 26px; border-radius: 5px; font-size: 9px; color: #d6d6e0;
+  display: flex; align-items: center; padding: 0 6px;
+  background: linear-gradient(180deg, #23232c, #16161c);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.07);
+  overflow: hidden; white-space: nowrap;
+}
+.tl-clip.a { background: linear-gradient(180deg, rgba(47,107,255,.35), rgba(47,107,255,.16)); box-shadow: inset 0 0 0 1px rgba(120,150,255,.32); }
+.tl-clip.b { background: linear-gradient(180deg, rgba(90,76,245,.32), rgba(90,76,245,.14)); box-shadow: inset 0 0 0 1px rgba(140,120,255,.3); }
+.tl-playhead { position: absolute; top: -4px; bottom: 8px; width: 1.5px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.65); left: 42%; }
+.tl-playhead::before { content: ""; position: absolute; top: -3px; left: -3px; width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+.mock-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  font-size: 10.5px; color: #75757f;
+}
+.mock-cta {
+  font-size: 11px; color: #0b0b0e; background: #fff; padding: 5px 11px; border-radius: 6px; font-weight: 600;
+}
+
+/* ---------- metric band ---------- */
+.metrics {
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+  border-block: 1px solid var(--line-soft);
+}
+.metric { padding: clamp(18px,2.4vw,26px) clamp(14px,2vw,24px); border-right: 1px solid var(--line-soft); }
+.metric:last-child { border-right: 0; }
+.metric b {
+  display: block; font-family: var(--ui-tight); font-weight: 600;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem); letter-spacing: -.04em; line-height: 1;
+}
+.metric span { display: block; margin-top: 7px; font-size: 12.5px; color: #85858f; letter-spacing: -.005em; }
+
+/* ---------- steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: clamp(18px, 3vw, 34px); }
+.step-item { position: relative; padding-top: 26px; border-top: 1px solid var(--line); }
+.step-item .n {
+  position: absolute; top: -13px; left: 0;
+  background: var(--ink); padding-right: 12px;
+  font-family: var(--serif); font-style: italic; font-size: 15px; color: #8b93a8;
+}
+.step-item h3 { font-size: 17px; font-weight: 500; letter-spacing: -.025em; }
+.step-item p { margin-top: 8px; color: #94949e; font-size: 13.5px; line-height: 1.6; }
+
+/* ---------- tabs ---------- */
+.tabs-head {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line-soft);
+  margin-top: 26px;
+}
+.tab {
+  position: relative;
+  padding: 12px 16px 14px;
+  font-size: 13.5px; color: #85858f;
+  letter-spacing: -.01em;
+  transition: color .2s ease;
+}
+.tab:hover { color: #d8d8e2; }
+.tab[aria-selected="true"] { color: #fff; }
+.tab[aria-selected="true"]::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 1.5px;
+  background: var(--grad); border-radius: 2px;
+}
+.tab .tab-n { font-family: var(--ui-tight); font-size: 11px; color: #5f6068; margin-right: 7px; }
+.tab[aria-selected="true"] .tab-n { color: #8fa6ff; }
+
+.tabpanel { display: none; padding-top: 24px; }
+.tabpanel.is-on { display: grid; grid-template-columns: minmax(0,.92fr) minmax(0,1.08fr); gap: clamp(22px,3.4vw,48px); align-items: center; animation: fadein .4s var(--ease) both; }
+@keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.tabpanel h3 { font-size: clamp(1.2rem, 1.9vw, 1.5rem); font-weight: 500; letter-spacing: -.03em; }
+.tabpanel > div > p { color: #95959f; font-size: 14px; line-height: 1.62; margin-top: 10px; }
+.tick-list { margin-top: 18px; display: grid; gap: 9px; }
+.tick-list li { display: flex; gap: 9px; font-size: 13.5px; color: #c6c6d0; line-height: 1.45; }
+.tick-list svg { width: 15px; height: 15px; flex: none; margin-top: 2px; color: #8fa6ff; }
+
+.tab-art {
+  border-radius: 14px; border: 1px solid var(--line-soft);
+  background: linear-gradient(170deg,#121216,#0a0a0c);
+  padding: 16px; min-height: 250px;
+  display: flex; flex-direction: column; justify-content: center; gap: 10px;
+}
+.art-field { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 9px; background: rgba(255,255,255,.03); box-shadow: inset 0 0 0 1px rgba(255,255,255,.055); font-size: 12px; color: #9a9aa5; }
+.art-field b { color: #ececf2; font-weight: 500; }
+.art-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+.art-chip { font-size: 11.5px; color: #d5d9e6; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.art-chip.on { background: rgba(47,107,255,.2); box-shadow: inset 0 0 0 1px rgba(120,150,255,.4); color: #eaf0ff; }
+.art-bars { display: flex; gap: 4px; align-items: flex-end; height: 74px; }
+.art-bars i { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, rgba(47,107,255,.75), rgba(47,107,255,.18)); }
+.art-bars i:nth-child(even) { background: linear-gradient(180deg, rgba(90,76,245,.7), rgba(90,76,245,.16)); }
+.art-cap { position: relative; padding: 10px 12px; border-radius: 9px; background: rgba(7,7,10,.9); box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+.art-cap p { font-size: 12.5px; color: #f0f0f5; font-weight: 600; letter-spacing: -.015em; }
+.art-safe { height: 1px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.22) 0 5px, transparent 5px 10px); margin-top: 8px; }
+.art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.art-variant { aspect-ratio: 9/13; border-radius: 7px; background: linear-gradient(180deg,#1c1c24,#111116); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); position: relative; }
+.art-variant::after { content: ""; position: absolute; top: 5px; right: 5px; width: 12px; height: 12px; border-radius: 50%; background: rgba(47,107,255,.9); box-shadow: 0 0 8px rgba(47,107,255,.7); }
+
+/* ---------- reasoning ---------- */
+.reason-grid { display: grid; grid-template-columns: minmax(0,.78fr) minmax(0,1.22fr); gap: clamp(22px,3.4vw,48px); align-items: center; }
+.reason-copy h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.038em; line-height: 1.1; }
+.reason-copy h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: #b9b9c4; }
+.reason-copy p { margin-top: 14px; color: #96969f; font-size: 14.5px; line-height: 1.62; }
+.reason-points { margin-top: 20px; display: grid; gap: 10px; }
+.reason-points li { display: flex; gap: 10px; font-size: 13.5px; color: #c2c2cc; line-height: 1.5; }
+.reason-points i { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: rgba(47,107,255,.16); box-shadow: inset 0 0 0 1px rgba(120,150,255,.3); color: #cfd9ff; font-size: 10px; font-style: normal; margin-top: 1px; }
+
+/* ---------- proof ---------- */
+.proof-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: clamp(22px,3.4vw,48px); align-items: center; }
+.quote { font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.45; letter-spacing: -.025em; color: #e9e9f0; font-weight: 400; }
+.quote em { font-family: var(--serif); font-style: italic; color: #cfcfdd; }
+.quote-by { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+.quote-by img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.quote-by span { font-size: 12.5px; color: #8d8d98; }
+.proof-shots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.proof-shots .shot { aspect-ratio: 9 / 12; }
+
+/* ---------- faq / pricing spacing ---------- */
+.price-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; font-size: 12.5px; color: #75757f; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1023px) {
+  .f-hero-grid { grid-template-columns: 1fr; gap: 34px; }
+  .f-title { max-width: 100%; }
+  .mock-wrap { order: -1; max-width: 520px; margin-inline: auto; width: 100%; }
+  .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .metric:nth-child(2) { border-right: 0; }
+  .metric:nth-child(1), .metric:nth-child(2) { border-bottom: 1px solid var(--line-soft); }
+  .steps { grid-template-columns: 1fr; gap: 22px; }
+  .tabpanel.is-on { grid-template-columns: 1fr; }
+  .reason-grid, .proof-grid { grid-template-columns: 1fr; }
+  .mock-body { grid-template-columns: 1fr; }
+  .mock-stage { aspect-ratio: 16 / 11; }
+  .mock-stage img { object-position: center 30%; }
+}
+@media (max-width: 560px) {
+  .f-actions .btn { width: 100%; }
+  .f-title { font-size: clamp(2.1rem, 9.4vw, 2.8rem); }
+  .metrics { grid-template-columns: 1fr; }
+  .metric { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .tab { padding: 10px 11px 12px; font-size: 12.5px; }
+  .tab .tab-n { display: none; }
+  .proof-shots { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body data-page="home" style="background:#050506;color:#fff">
+
+<a class="skip" href="#main">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="site-header">
@@ -34,14 +305,14 @@
 
     <nav class="nav-pills" aria-label="Primary">
       <a class="nav-pill" href="#product">Product</a>
-      <a class="nav-pill" href="#showcase">Showcase</a>
+      <a class="nav-pill" href="./tour.html">Tour</a>
       <a class="nav-pill" href="#pricing">Pricing</a>
       <a class="nav-pill" href="#faq">FAQ</a>
     </nav>
 
     <div class="header-actions">
       <a class="btn btn--ghost btn--sm" href="./sign-in.html">Sign in</a>
-      <a class="btn btn--solid" href="./start.html" data-session-cta>Start free</a>
+      <a class="btn btn--solid btn--sm" href="./start.html" data-session-cta>Start free</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -51,233 +322,313 @@
 
 <div class="menu-backdrop" aria-hidden="true"></div>
 
-<!-- hero -->
-<section class="hero">
+<main id="main">
+
+<!-- ============ hero ============ -->
+<section class="f-hero">
   <div class="ambient" aria-hidden="true"></div>
-  <div class="wrap hero-inner">
-    <div class="orb" aria-hidden="true">
-      <span class="orb-plate"></span><span class="orb-core"></span><span class="orb-swirl"></span><span class="orb-glass"></span>
-    </div>
+  <div class="wrap f-hero-grid">
 
-    <p class="badge">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
-      <span>Operational Video AI</span>
-    </p>
+    <div>
+      <p class="f-kicker"><span class="dotlive" aria-hidden="true"></span>Built for TikTok Shop creators</p>
 
-    <h1 class="display">
-      <span class="line-mask"><span class="line-inner">Turn raw footage into</span></span>
-      <span class="line-mask"><span class="line-inner"><em>scroll-stopping</em> ads.</span></span>
-    </h1>
+      <h1 class="f-title">
+        <span class="line-mask"><span class="line-inner">The editing layer behind</span></span>
+        <span class="line-mask"><span class="line-inner"><em>every ad</em> you ship.</span></span>
+      </h1>
 
-    <p class="lede">EditMax learns your product, your hooks and your pacing — then cuts, captions and exports TikTok Shop videos that actually sell.</p>
+      <p class="f-lede">One brief in. A batch of vertical ads out — cut, hooked, captioned and exported before your coffee goes cold.</p>
 
-    <form class="composer" data-composer onsubmit="return false">
-      <div class="composer-glow" aria-hidden="true"></div>
-      <div class="composer-box">
-        <label class="sr-only" for="hero-brief">Describe the video you need</label>
-        <textarea class="composer-input" id="hero-brief" rows="2" placeholder="Paste a product link — or describe the video you need…"></textarea>
-        <div class="composer-row">
-          <button class="chip chip--round" type="button" aria-label="Add footage">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <button class="chip" type="button" data-mode="deep" aria-pressed="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.6v.2h5.6v-.2c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg>
-            DeepCut
-          </button>
-          <button class="chip" type="button" data-mode="916" aria-pressed="false">9:16</button>
-          <button class="composer-send" type="button" data-composer-send aria-label="Start editing">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.6 11.4 12 5l6.4 6.4"/></svg>
-          </button>
+      <div class="f-actions">
+        <a class="btn btn--solid btn--lg" href="./start.html" data-session-cta>Start free for 3 days</a>
+        <a class="btn btn--ghost btn--lg" href="./tour.html">Take the product tour</a>
+      </div>
+
+      <div class="f-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No card for 3 days</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cancel in two clicks</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>9:16 by default</span>
+      </div>
+
+      <div class="f-trust">
+        <p>Used by teams selling on</p>
+        <div class="f-logos">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.6 21 7v10l-9 4.4L3 17V7l9-4.4Z"/></svg>Shopline</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 14.6c1.2 1.2 2.5 1.8 4 1.8s2.8-.6 4-1.8"/></svg>CreatorHub</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4.5"/><path d="M8 15V9l4 3 4-3v6"/></svg>ClipForge</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17V7l8 5 8-5v10"/></svg>NovaShop</span>
         </div>
       </div>
-    </form>
-
-    <div class="hero-actions">
-      <a class="btn btn--solid btn--lg" href="./start.html" data-session-cta>Start free for 3 days</a>
-      <a class="btn btn--ghost btn--lg" href="./assistant.html">See it in action</a>
     </div>
-    <p class="hero-note">No charge today · Cancel anytime · Works with TikTok Shop, Shopify and Amazon listings</p>
+
+    <!-- editor mock -->
+    <div class="mock-wrap" aria-hidden="true">
+      <div class="mock">
+        <div class="mock-bar">
+          <span class="mock-dots"><i></i><i></i><i></i></span>
+          <span class="mock-title">Variant 03 · vitamin C serum</span>
+          <span class="mock-state">Draft</span>
+        </div>
+
+        <div class="mock-body">
+          <div class="mock-stage">
+            <img src="./assets/22_after-poster.webp" alt="" width="540" height="960" loading="eager" decoding="async">
+            <span class="mock-ratio">9:16</span>
+            <div class="mock-overlay">
+              <span class="mock-hook">Your serum is oxidising by noon.</span>
+              <span class="mock-cap">3 drops · 12 hours</span>
+            </div>
+            <span class="mock-safe"></span>
+          </div>
+
+          <div class="mock-side">
+            <div class="mock-row"><span>Hook score</span><b>92</b></div>
+            <div class="mock-row"><span>Retention</span><b>61%</b></div>
+            <div class="mock-row"><span>Predicted CTR</span><b class="up">4.8%</b></div>
+            <p class="mock-note">Talking-head intro removed — it delayed the first visual by 2.4s.</p>
+          </div>
+        </div>
+
+        <div class="mock-timeline">
+          <div class="tl-clip a" style="flex:3">Macro</div>
+          <div class="tl-clip" style="flex:4">Texture</div>
+          <div class="tl-clip b" style="flex:5">Before / after</div>
+          <div class="tl-clip" style="flex:2">Price</div>
+          <span class="tl-playhead"></span>
+        </div>
+
+        <div class="mock-foot">
+          <span>0:14 · 1080 × 1920 · h.264</span>
+          <span class="mock-cta">Export</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- stats -->
+<!-- ============ metrics ============ -->
 <div class="wrap">
-  <div class="stats">
-    <span class="stat">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="s1" x1="3" y1="2" x2="14" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".38"/><stop offset="1" stop-color="#3a3a3a" stop-opacity=".62"/></linearGradient></defs><rect x="3.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="url(#s1)"/><rect x="13.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="#5b5b66"/><rect x="9.2" y="10.9" width="5.6" height="2.2" rx="1.1" fill="#4a4a52"/></svg>
-      <span><b><span data-count="4.2" data-suffix="M+">4.2M+</span></b> videos automated</span>
-    </span>
-    <span class="stat">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="2.4" width="19.2" height="19.2" rx="6.2" fill="#fff"/><g stroke="#111" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 7.1v7.4"/><path d="M8.15 12.35 12 16.2l3.85-3.85"/></g></svg>
-      <span><b><span data-count="92" data-suffix="%">92%</span></b> less manual editing</span>
-    </span>
-    <span class="stat">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.6" fill="#8a8a95"/><circle cx="16.6" cy="10.4" r="2.8" fill="#5d5d67"/><path d="M2.6 19.4c.7-3.4 3.3-5.4 6.4-5.4s5.7 2 6.4 5.4" fill="#6f6f7a"/><path d="M15.4 19.4c.3-2.5 1.9-4 4-4 1.4 0 2.6.7 3.2 2" fill="#4d4d56"/></svg>
-      <span><b><span data-count="180" data-suffix="+">180+</span></b> creator teams</span>
-    </span>
-    <span class="stat">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.5 6.2 20.6l1.1-6.5L2.6 9.5l6.5-.9L12 2.7z" fill="#e8e8ef"/></svg>
-      <span><b>4.9</b> average rating</span>
-    </span>
+  <div class="metrics">
+    <div class="metric"><b><span data-count="4.2" data-suffix="M+">4.2M+</span></b><span>videos automated</span></div>
+    <div class="metric"><b><span data-count="92" data-suffix="%">92%</span></b><span>less manual editing</span></div>
+    <div class="metric"><b>90s</b><span>average batch render</span></div>
+    <div class="metric"><b><span data-count="4.9">4.9</span></b><span>average rating</span></div>
   </div>
 </div>
 
-<!-- how it works -->
+<!-- ============ product / steps ============ -->
 <section class="section" id="product">
   <div class="wrap">
-    <div class="mx-auto center" style="max-width:56ch">
-      <p class="eyebrow will-reveal">How it works</p>
-      <h2 class="h2 mt-2 will-reveal">Three steps from <em>raw clip</em> to live ad</h2>
-      <p class="lede mt-2 will-reveal">No timeline scrubbing. No template hunting. Give EditMax the product and the angle, and it does the boring 40 minutes.</p>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div style="max-width:50ch">
+        <p class="eyebrow will-reveal">The workflow</p>
+        <h2 class="h2 mt-2 will-reveal">From link to live ad in <em>three moves</em></h2>
+      </div>
+      <a class="link-arrow will-reveal" href="./start.html">Start a batch →</a>
     </div>
 
-    <div class="grid grid-3 mt-4">
-      <article class="card will-reveal">
-        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16M4 12h10M4 18.5h7"/></svg></span>
-        <h3 class="h3">1 · Brief it once</h3>
-        <p>Drop a product link or your raw footage. Pick an angle — problem/solution, unboxing, before/after, founder story. EditMax remembers the brand rules you set.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="M10 9.4v5.2l4.4-2.6L10 9.4Z"/></svg></span>
-        <h3 class="h3">2 · Let it cut</h3>
-        <p>Scene detection trims the dead air, finds the money shot, writes the hook in the first 1.5 seconds and burns captions that survive muted autoplay.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--teal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5.6 11.4 12 5l6.4 6.4"/></svg></span>
-        <h3 class="h3">3 · Ship the variants</h3>
-        <p>Export ten 9:16 variants with different hooks in one run. Send the winners to TikTok Shop and feed performance back into the next batch.</p>
-      </article>
+    <div class="steps mt-4" style="margin-top:44px">
+      <div class="step-item will-reveal">
+        <span class="n">01</span>
+        <h3>Brief it once</h3>
+        <p>Paste a product link or drop footage. Pick an angle — problem/solution, unboxing, before/after, founder story. Your brand rules are remembered.</p>
+      </div>
+      <div class="step-item will-reveal">
+        <span class="n">02</span>
+        <h3>Let it cut</h3>
+        <p>Scene detection trims the dead air, finds the money shot, writes the hook inside the first 1.5 seconds and burns captions that survive muted autoplay.</p>
+      </div>
+      <div class="step-item will-reveal">
+        <span class="n">03</span>
+        <h3>Ship the winners</h3>
+        <p>Export ten 9:16 variants with different hooks in one run. Send the winners to TikTok Shop and feed the results into the next batch.</p>
+      </div>
+    </div>
+
+    <!-- tabs -->
+    <div class="tabs-head will-reveal" role="tablist" aria-label="Product capabilities">
+      <button class="tab" id="tab-brief" role="tab" aria-selected="true" aria-controls="panel-brief" tabindex="0">
+        <span class="tab-n">01</span>Brief
+      </button>
+      <button class="tab" id="tab-cut" role="tab" aria-selected="false" aria-controls="panel-cut" tabindex="-1">
+        <span class="tab-n">02</span>Cut
+      </button>
+      <button class="tab" id="tab-captions" role="tab" aria-selected="false" aria-controls="panel-captions" tabindex="-1">
+        <span class="tab-n">03</span>Captions
+      </button>
+      <button class="tab" id="tab-export" role="tab" aria-selected="false" aria-controls="panel-export" tabindex="-1">
+        <span class="tab-n">04</span>Export
+      </button>
+    </div>
+
+    <div class="tabpanel is-on" id="panel-brief" role="tabpanel" aria-labelledby="tab-brief">
+      <div>
+        <h3>A brief, not a timeline</h3>
+        <p>Write it like you'd tell an editor: product, angle, tone. EditMax fills the gaps from your brand kit and past winners.</p>
+        <ul class="tick-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Product links, stills or footage up to 4K</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Angle presets that match your best performers</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Brand rules locked per store, not per video</li>
+        </ul>
+      </div>
+      <div class="tab-art">
+        <div class="art-field"><span>Product</span><b>shop.com/serum</b></div>
+        <div class="art-chips">
+          <span class="art-chip on">Problem / solution</span>
+          <span class="art-chip">Unboxing</span>
+          <span class="art-chip">Before / after</span>
+        </div>
+        <div class="art-field"><span>Tone</span><b>Direct · no fluff</b></div>
+        <div class="art-field"><span>Length</span><b>15s</b></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="panel-cut" role="tabpanel" aria-labelledby="tab-cut">
+      <div>
+        <h3>Scene-aware cuts</h3>
+        <p>EditMax reads the footage instead of guessing. Dead air, fumbles and setup shots are removed; the highest-contrast frame opens the ad.</p>
+        <ul class="tick-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Automatic trims with frame-level precision</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hook placed inside the first 1.5 seconds</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Same cut re-timed for 9s, 15s or 30s</li>
+        </ul>
+      </div>
+      <div class="tab-art">
+        <div class="mock-timeline" style="padding:0 0 4px">
+          <div class="tl-clip a" style="flex:3">Hook</div>
+          <div class="tl-clip" style="flex:4">Texture</div>
+          <div class="tl-clip b" style="flex:5">After</div>
+          <div class="tl-clip" style="flex:2">CTA</div>
+          <span class="tl-playhead"></span>
+        </div>
+        <div class="art-bars" aria-hidden="true">
+          <i style="height:32%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:64%"></i>
+          <i style="height:96%"></i><i style="height:72%"></i><i style="height:44%"></i><i style="height:80%"></i>
+          <i style="height:30%"></i><i style="height:54%"></i><i style="height:70%"></i><i style="height:38%"></i>
+        </div>
+        <div class="art-field"><span>Dead air removed</span><b>00:06.4</b></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="panel-captions" role="tabpanel" aria-labelledby="tab-captions">
+      <div>
+        <h3>Captions that read clean</h3>
+        <p>Word-level timing, one line at a time, placed above the TikTok Shop overlay so nothing important gets covered.</p>
+        <ul class="tick-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Safe-area aware placement on every export</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Legible at 1× and 2× playback</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Your font, weight and colour — not a template</li>
+        </ul>
+      </div>
+      <div class="tab-art">
+        <div class="art-cap">
+          <p>Your serum is oxidising by noon.</p>
+          <div class="art-safe" aria-hidden="true"></div>
+          <p style="margin-top:8px;font-size:11px;font-weight:400;color:#8b8b96">Safe area · TikTok Shop overlay</p>
+        </div>
+        <div class="art-field"><span>Style</span><b>Brand kit · semibold</b></div>
+        <div class="art-field"><span>Accuracy pass</span><b>Checked</b></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="panel-export" role="tabpanel" aria-labelledby="tab-export">
+      <div>
+        <h3>Ten variants, one run</h3>
+        <p>Batch queue renders up to ten hook variants in parallel. Come back to a folder of ready-to-post files, not a progress bar.</p>
+        <ul class="tick-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>1080 × 1920 by default, 4K on Ultimate</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Named by hook so the winner is obvious</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No watermark, no export credits</li>
+        </ul>
+      </div>
+      <div class="tab-art">
+        <div class="art-grid" aria-hidden="true">
+          <div class="art-variant"></div><div class="art-variant"></div><div class="art-variant"></div>
+          <div class="art-variant"></div><div class="art-variant"></div><div class="art-variant"></div>
+        </div>
+        <div class="art-field"><span>Batch</span><b>10 of 10 ready · 88s</b></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- features -->
+<!-- ============ reasoning ============ -->
 <section class="section section--tight">
   <div class="wrap">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
-      <div style="max-width:46ch">
-        <p class="eyebrow will-reveal">Built for sellers</p>
-        <h2 class="h2 mt-2 will-reveal">Everything a <em>product video</em> needs</h2>
+    <div class="reason-grid">
+      <div class="reason-copy will-reveal">
+        <p class="eyebrow">Reasoning</p>
+        <h2 class="mt-2">Every cut comes with a <em>why</em></h2>
+        <p>Ask a follow-up in plain English. Override the call. EditMax keeps the reasoning attached to the file, so your team can review decisions instead of guessing at them.</p>
+        <ul class="reason-points">
+          <li><i>1</i><span>Explains what it removed and what that usually costs you in retention.</span></li>
+          <li><i>2</i><span>Rewrites hooks without re-rendering the whole timeline.</span></li>
+          <li><i>3</i><span>Learns your taste from the overrides you make.</span></li>
+        </ul>
       </div>
-      <a class="link-arrow will-reveal" href="./studio.html">Open the studio →</a>
-    </div>
 
-    <div class="grid grid-3 mt-4" style="gap:14px">
-      <article class="card will-reveal">
-        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.2 5.4 13.4h5.1l-.9 7.4 8.1-10.2h-5.1l.9-7.4Z"/></svg></span>
-        <h3 class="h3">Hook engine</h3>
-        <p>Five hook rewrites per clip, ranked by how fast they land. Swap one word and re-run the whole batch.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7.5 14.5h9M7.5 11h5.5"/></svg></span>
-        <h3 class="h3">Captions that read clean</h3>
-        <p>Word-level timing, safe-area aware placement, and a caption style that stays legible under TikTok UI.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.4" y="3.4" width="7.2" height="7.2" rx="2"/><rect x="13.4" y="3.4" width="7.2" height="7.2" rx="2"/><rect x="3.4" y="13.4" width="7.2" height="7.2" rx="2"/><rect x="13.4" y="13.4" width="7.2" height="7.2" rx="2"/></svg></span>
-        <h3 class="h3">Ten at a time</h3>
-        <p>Batch queue renders up to ten variants in parallel. Come back to a folder, not a progress bar.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"/><path d="M12 12v9M4 7.5l8 4.5 8-4.5"/></svg></span>
-        <h3 class="h3">Brand kits</h3>
-        <p>Fonts, colours, lower-thirds and end cards locked per store — so three editors produce one brand.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--teal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V11M10 19V5M16 19v-6M22 19H2"/></svg></span>
-        <h3 class="h3">Performance loop</h3>
-        <p>Connect results and EditMax learns which pacing, hooks and lengths your audience actually finishes.</p>
-      </article>
-      <article class="card will-reveal">
-        <span class="card-icon card-icon--teal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
-        <h3 class="h3">Same-day turnaround</h3>
-        <p>Full render under two minutes for a 30-second ad. No queue position, no export credits.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- live reasoning -->
-<section class="section">
-  <div class="wrap">
-    <div class="mx-auto center" style="max-width:58ch">
-      <p class="eyebrow will-reveal">Live reasoning</p>
-      <h2 class="h2 mt-2 will-reveal">See <em>why</em> a cut works</h2>
-      <p class="lede mt-2 will-reveal">Every edit ships with its reasoning. Ask follow-ups, override the call, and the model learns your taste instead of guessing again.</p>
-    </div>
-
-    <div class="panel-energy mt-4">
-      <div class="live-row"><span class="dot" aria-hidden="true"></span><span>Live reasoning</span></div>
-      <div class="chat-card">
-        <div class="msg msg--user">
-          <span class="msg-avatar msg-avatar--user" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M4.6 20c.8-3.6 3.8-5.6 7.4-5.6s6.6 2 7.4 5.6"/></svg></span>
-          <div class="bubble">Cut a 15s ad for the vitamin C serum. It needs to stop the scroll in the first second.</div>
-        </div>
-        <div class="msg">
-          <span class="msg-avatar msg-avatar--ai" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0c07" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 13.9 9l5.6 1.9-5.6 1.9L12 18.4l-1.9-5.6L4.5 10.9 10.1 9 12 3.4Z"/></svg></span>
-          <div class="bubble">Cutting three hook variants from your footage:<span class="gap"></span>• <b>0.0–1.2s</b> — macro drop on the bottle (highest contrast frame)<br>• <b>1.2–4.0s</b> — “Your serum is oxidising by noon.” over the texture shot<br>• <b>4.0–11.0s</b> — before/after split, captions burned<br>• <b>11.0–15.0s</b> — price card + “Shop now”<span class="gap"></span>I dropped the talking-head intro: it delays the first visual by 2.4s, which historically costs 31% of viewers on your account. Want the calmer variant instead?</div>
-        </div>
-        <div class="msg msg--user">
-          <span class="msg-avatar msg-avatar--user" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M4.6 20c.8-3.6 3.8-5.6 7.4-5.6s6.6 2 7.4 5.6"/></svg></span>
-          <div class="bubble">Keep the hard cut. Give me five hook rewrites and render all of them.</div>
-        </div>
-        <div class="msg">
-          <span class="msg-avatar msg-avatar--ai" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0c07" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 13.9 9l5.6 1.9-5.6 1.9L12 18.4l-1.9-5.6L4.5 10.9 10.1 9 12 3.4Z"/></svg></span>
-          <div class="bubble">Queued 5 renders at 1080×1920. Hooks: “Dermatologists won't say this”, “Oxidised by noon?”, “3 drops, 12 hours”, “The 12-hour glow test”, “Stop buying serum until you see this”. All five will be in your library in about 90 seconds.</div>
+      <div class="panel-energy will-reveal" style="padding:clamp(14px,1.8vw,22px)">
+        <div class="live-row"><span class="dot" aria-hidden="true"></span><span>Live reasoning</span></div>
+        <div class="chat-card" style="margin-top:12px">
+          <div class="msg msg--user">
+            <span class="msg-avatar msg-avatar--user" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M4.6 20c.8-3.6 3.8-5.6 7.4-5.6s6.6 2 7.4 5.6"/></svg></span>
+            <div class="bubble">Why did you drop the talking-head intro?</div>
+          </div>
+          <div class="msg">
+            <span class="msg-avatar msg-avatar--ai" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0c07" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4 13.9 9l5.6 1.9-5.6 1.9L12 18.4l-1.9-5.6L4.5 10.9 10.1 9 12 3.4Z"/></svg></span>
+            <div class="bubble">On your account, videos that wait 2.4s before the first visual lose about 31% of viewers. The macro shot keeps the same information and lands at 0.4s — so it opens instead.<span class="gap"></span>Want me to test the slower version as variant 04?</div>
+          </div>
+          <div class="msg msg--user">
+            <span class="msg-avatar msg-avatar--user" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#f2f2f2" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.4" r="3.5"/><path d="M4.6 20c.8-3.6 3.8-5.6 7.4-5.6s6.6 2 7.4 5.6"/></svg></span>
+            <div class="bubble">Yes — and make the hook colder.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- showcase -->
+<!-- ============ proof ============ -->
 <section class="section section--tight" id="showcase">
   <div class="wrap">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
-      <div style="max-width:46ch">
-        <p class="eyebrow will-reveal">Showcase</p>
-        <h2 class="h2 mt-2 will-reveal">Cuts from <em>real stores</em></h2>
+    <div class="proof-grid">
+      <div class="will-reveal">
+        <p class="eyebrow">In production</p>
+        <p class="quote mt-2" style="margin-top:14px">“We were paying an editor per video and still shipping twice a week. EditMax got us to <em>ten variants a day</em> — and its hooks beat ours more often than I'd like to admit.”</p>
+        <div class="quote-by">
+          <img src="./assets/25_james-white.webp" alt="" width="34" height="34" loading="lazy">
+          <span>James White · head of growth, Shopline</span>
+        </div>
+
+        <div class="metrics" style="border:0;margin-top:26px;gap:0">
+          <div class="metric" style="padding-left:0"><b>+38%</b><span>CTR on the serum set</span></div>
+          <div class="metric"><b>2.1M</b><span>views on one founder cut</span></div>
+          <div class="metric"><b>88s</b><span>to render ten variants</span></div>
+        </div>
       </div>
-      <a class="link-arrow will-reveal" href="./dashboard.html">Open AI Studio →</a>
-    </div>
 
-    <div class="grid grid-4 mt-4" style="gap:12px">
-      <figure class="shot will-reveal" style="margin:0">
-        <img src="./assets/22_after-poster.webp" alt="Before and after product poster cut into a 9:16 ad" loading="lazy" decoding="async" width="540" height="960">
-        <figcaption class="shot-meta"><span>Serum · after/before</span><b>+38% CTR</b></figcaption>
-      </figure>
-      <figure class="shot will-reveal" style="margin:0">
-        <img src="./assets/24_colin-reich.webp" alt="Creator testimonial frame exported by EditMax" loading="lazy" decoding="async" width="540" height="960">
-        <figcaption class="shot-meta"><span>Founder story</span><b>2.1M views</b></figcaption>
-      </figure>
-      <figure class="shot will-reveal" style="margin:0">
-        <img src="./assets/32_hand-real.webp" alt="Hand-held product footage used in an unboxing ad" loading="lazy" decoding="async" width="768" height="1360">
-        <figcaption class="shot-meta"><span>Unboxing · 9:16</span><b>0:14 runtime</b></figcaption>
-      </figure>
-      <figure class="shot will-reveal" style="margin:0">
-        <img src="./assets/31_screen-cutting.webp" alt="EditMax cutting screen showing scene detection" loading="lazy" decoding="async" width="720" height="1566">
-        <figcaption class="shot-meta"><span>Batch of 10</span><b>88s render</b></figcaption>
-      </figure>
+      <div class="proof-shots will-reveal">
+        <figure class="shot" style="margin:0">
+          <img src="./assets/24_colin-reich.webp" alt="Founder story frame exported by EditMax" loading="lazy" width="540" height="960">
+          <figcaption class="shot-meta"><span>Founder story</span><b>2.1M views</b></figcaption>
+        </figure>
+        <figure class="shot" style="margin:0">
+          <img src="./assets/31_screen-cutting.webp" alt="EditMax cutting screen with scene detection" loading="lazy" width="720" height="1566">
+          <figcaption class="shot-meta"><span>Batch of 10</span><b>88s</b></figcaption>
+        </figure>
+      </div>
     </div>
-
-    <blockquote class="card will-reveal" style="margin-top:14px;padding:24px">
-      <p style="font-size:15px;color:#dcdce4;line-height:1.6">“We were paying an editor per video and still shipping twice a week. EditMax cut that to ten variants a day, and the hooks it writes beat ours more often than I'd like to admit.”</p>
-      <footer style="display:flex;align-items:center;gap:10px;margin-top:16px">
-        <img src="./assets/25_james-white.webp" alt="" width="34" height="34" style="width:34px;height:34px;border-radius:50%;object-fit:cover" loading="lazy">
-        <span style="font-size:13px;color:#9a9aa4">James White · head of growth, Shopline</span>
-      </footer>
-    </blockquote>
   </div>
 </section>
 
-<!-- pricing -->
+<!-- ============ pricing ============ -->
 <section class="section" id="pricing">
   <div class="wrap">
     <div class="price-head">
-      <div style="max-width:44ch">
+      <div style="max-width:46ch">
         <p class="eyebrow will-reveal">Pricing</p>
-        <h2 class="h2 mt-2 will-reveal">Start free, then <em>scale the output</em></h2>
-        <p class="lede mt-2 will-reveal">Every plan starts with a 3-day free trial. No charge today, cancel in two clicks.</p>
+        <h2 class="h2 mt-2 will-reveal">Start free, <em>then scale the output</em></h2>
+        <p class="lede mt-2 will-reveal">Every plan begins with a 3-day trial. No charge today, and cancelling takes two clicks.</p>
       </div>
       <div class="toggle will-reveal" data-price-toggle role="group" aria-label="Billing period">
         <button type="button" data-period="monthly" aria-pressed="true">Monthly</button>
@@ -338,10 +689,15 @@
         <p class="plan-note">3 days free, then $89.99/mo</p>
       </article>
     </div>
+
+    <p class="price-foot">
+      <span>All plans include the reasoning log, brand kits and 9:16 / 1:1 / 16:9 exports.</span>
+      <a class="link-arrow" href="./refund.html" style="font-size:12.5px">14-day refund policy</a>
+    </p>
   </div>
 </section>
 
-<!-- faq -->
+<!-- ============ faq ============ -->
 <section class="section section--tight" id="faq">
   <div class="wrap" style="max-width:840px">
     <p class="eyebrow will-reveal">FAQ</p>
@@ -365,26 +721,26 @@
         <div class="faq-a">You pick a plan, add a card for verification, and get 3 days free. You're charged on day 3 unless you cancel. Cancel from your account page in two clicks — no email required.</div>
       </details>
       <details class="faq-item will-reveal">
-        <summary class="faq-q">Can I export to TikTok Shop directly?<span class="ic" aria-hidden="true"></span></summary>
-        <div class="faq-a">Every render drops into a library as 9:16, 1:1 or 16:9, safe-area aware, ready to upload to TikTok Shop, Ads Manager or your organic account.</div>
+        <summary class="faq-q">Can I export straight to TikTok Shop?<span class="ic" aria-hidden="true"></span></summary>
+        <div class="faq-a">Every render lands in a library as 9:16, 1:1 or 16:9, safe-area aware, ready to upload to TikTok Shop, Ads Manager or your organic account.</div>
       </details>
       <details class="faq-item will-reveal">
         <summary class="faq-q">What if I don't like the cut?<span class="ic" aria-hidden="true"></span></summary>
-        <div class="faq-a">Ask for a change in plain English — “tighter hook”, “less text”, “slower” — and it re-cuts. Edits don't count twice against your monthly limit.</div>
+        <div class="faq-a">Ask for a change in plain English — “tighter hook”, “less text”, “slower” — and it re-cuts. Re-cuts don't count twice against your monthly limit.</div>
       </details>
     </div>
   </div>
 </section>
 
-<!-- final cta -->
+<!-- ============ closer ============ -->
 <section class="section section--tight">
   <div class="wrap">
     <div class="cta-band will-reveal">
-      <div class="orb mx-auto" aria-hidden="true" style="margin-bottom:18px">
+      <div class="orb mx-auto" aria-hidden="true" style="margin-bottom:16px;width:76px;height:76px;min-width:76px">
         <span class="orb-plate"></span><span class="orb-core"></span><span class="orb-swirl"></span><span class="orb-glass"></span>
       </div>
       <h2 class="h2">Your next ad is <em>already in</em> your camera roll</h2>
-      <p class="lede mx-auto mt-2" style="max-width:52ch">Start the free trial, drop one clip and watch what EditMax does with it. Three days, no charge today.</p>
+      <p class="lede mx-auto mt-2" style="max-width:50ch">Start the trial, drop one clip, and see what a batch looks like. Three days free — the only thing you spend is the trial.</p>
       <div class="hero-actions">
         <a class="btn btn--solid btn--lg" href="./start.html" data-session-cta>Start free for 3 days</a>
         <a class="btn btn--ghost btn--lg" href="./dashboard.html">Open AI Studio</a>
@@ -392,6 +748,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -407,11 +765,11 @@
         <h4>Product</h4>
         <ul>
           <li><a href="./start.html">Start editing</a></li>
+          <li><a href="./tour.html">Product tour</a></li>
+          <li><a href="./home.html">Cinematic home</a></li>
           <li><a href="./studio.html">Studio</a></li>
           <li><a href="./assistant.html">Assistant</a></li>
-          <li><a href="./dashboard.html">AI Studio dashboard</a></li>
-          <li><a href="./home.html">Immersive home</a></li>
-          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="./dashboard.html">AI Studio</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -441,5 +799,35 @@
 
 <script src="./assets/em26.js?v=1"></script>
 <script src="./assets/em26-app.js?v=1"></script>
+<script>
+(function () {
+  "use strict";
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  if (!tabs.length) return;
+
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute("aria-controls"));
+      if (panel) panel.classList.toggle("is-on", on);
+    });
+    if (focus) tab.focus();
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () { select(tab); });
+    tab.addEventListener("keydown", function (e) {
+      var next = null;
+      if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+      else if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (e.key === "Home") next = tabs[0];
+      else if (e.key === "End") next = tabs[tabs.length - 1];
+      if (next) { e.preventDefault(); select(next, true); }
+    });
+  });
+})();
+</script>
 </body>
 </html>
